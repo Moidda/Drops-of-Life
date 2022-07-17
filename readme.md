@@ -71,3 +71,12 @@ const LogInScreen = (props) => {
 
 export default LogInScreen;
 ```
+
+# Using States to dynamically handle data in a view
+
+[Youtube](https://www.youtube.com/watch?v=1FiIYaRr148&ab_channel=TheNetNinja)
+
+# TextInputs
+
+- [Youtube](https://www.youtube.com/watch?v=c9Sg9jDitm8&t=30s&ab_channel=TheNetNinja)
+- No props for styling text inside TextInput. [Refer](https://github.com/callstack/react-native-paper/issues/546#issuecomment-458109566)
