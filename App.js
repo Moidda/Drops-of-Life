@@ -6,6 +6,8 @@ import { View, Text, StyleSheet } from "react-native";
 import StartingScreen from "./components/StartingScreen";
 import LogInScreen from "./components/LogInScreen";
 import RegisterScreen from "./components/RegisterScreen";
+import HomeScreen from "./screens/HomeScreen";
+import HomeScreenIcon from "./components/HomeScreenIcon";
 
 
 const Stack = createNativeStackNavigator();
@@ -15,7 +17,12 @@ const App = () => {
 
         // <StartingScreen />
         // <LogInScreen />
-        <RegisterScreen />
+        // <RegisterScreen />
+        <HomeScreenIcon 
+            onPress={() => {console.warn("Hello from App.js")}}
+            text="Request"
+        />
+        // <HomeScreen />
 
         // <NavigationContainer>
         //     <Stack.Navigator>

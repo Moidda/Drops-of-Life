@@ -81,20 +81,27 @@ export default LogInScreen;
 - [Youtube](https://www.youtube.com/watch?v=c9Sg9jDitm8&t=30s&ab_channel=TheNetNinja)
 - No props for styling text inside TextInput. [Refer](https://github.com/callstack/react-native-paper/issues/546#issuecomment-458109566)
 
-# Installing react-native-vector-icons
+# react-native-vector-icons
 
-- Run: ```$ npm install --save react-native-vector-icons```
-- Edit ```android/app/build.gradle``` ( NOT ```android/build.gradle``` ) and add the following: 
-  ```bash
-  apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+- **Installing:**
+  - Run: ```$ npm install --save react-native-vector-icons```
+  - Edit ```android/app/build.gradle``` ( NOT ```android/build.gradle``` ) and add the following: 
+    ```bash
+    apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+    ```
+- **Usage:**
+  ```javascript
+  import Icon from 'react-native-vector-icons/FontAwesome';
+  
+  const IconExample = (props) => {
+      return (
+        <View>
+            <Icon name="rocket" size={30} color="#900" />
+        </View>
+    );
+  };
+  export default IconExample;
   ```
-
-## Usage
-
-```javascript
-import Icon from 'react-native-vector-icons/FontAwesome';
-const myIcon = <Icon name="rocket" size={30} color="#900" />;
-```
 
 # Scrollable view
 
