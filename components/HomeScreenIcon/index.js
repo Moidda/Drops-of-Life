@@ -8,14 +8,15 @@ const HomeScreenIcon = (props) => {
 
     const onPress = props.onPress;
     const text = props.text;
+    const iconName = props.iconName;
 
     return (
     <TouchableOpacity
         style={styles.container}
         onPress={onPress}
     >
-        <Icon name="wpforms" size={50} color={Constants.DEFAULT_RED} />
-        <Text style={{fontSize: 15, color: Constants.DEFAULT_RED}}>{text}</Text>
+        <Icon name={iconName} size={50} color="white" />
+        <Text style={{fontSize:15, color:"white"}}>{text}</Text>
     </TouchableOpacity>
     );
 

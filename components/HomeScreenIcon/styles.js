@@ -4,11 +4,13 @@ import * as Constants from "../../constants";
 
 const styles = StyleSheet.create({
     container: {
-        width: "25%",
-        height: "15%",
-        backgroundColor: Constants.LIGHT_GREY,
+        width: 100,
+        height: 100,
+        backgroundColor: Constants.DEFAULT_RED,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        margin: "2%",
+        borderRadius: 20
     },
 });
 

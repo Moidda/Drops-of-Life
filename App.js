@@ -18,11 +18,7 @@ const App = () => {
         // <StartingScreen />
         // <LogInScreen />
         // <RegisterScreen />
-        <HomeScreenIcon 
-            onPress={() => {console.warn("Hello from App.js")}}
-            text="Request"
-        />
-        // <HomeScreen />
+        <HomeScreen />
 
         // <NavigationContainer>
         //     <Stack.Navigator>
