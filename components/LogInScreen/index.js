@@ -5,10 +5,16 @@ import * as Constants from "../../constants";
 import StyledButton from "../StyledButton"
 
 
-const LogInScreen = () => {
+const LogInScreen = (prop) => {
     const [name, setName] = React.useState("");
-    const onPress = () => {
-        console.warn("You pressed register");    
+
+    const onPressRegister = () => {
+        prop.navigation.navigate(Constants.RouteName.register);
+    }
+
+    const onPressLogIn = () => {
+        console.warn("User is now logged in!");
+        prop.navigation.navigate(Constants.RouteName.home);
     }
 
     return (
@@ -49,12 +55,12 @@ const LogInScreen = () => {
                 color={Constants.DEFAULT_RED}
                 textColor={"white"}
                 text="LOG IN"
-                onPress={() => {console.warn("You pressed login")}}
+                onPress={onPressLogIn}
             />
 
             <View style={styles.registerNowContainer}>
                 <Text style={{color:"black", fontSize:20}}>Don't have an account? </Text>
-                <TouchableOpacity onPress={onPress}>
+                <TouchableOpacity onPress={onPressRegister}>
                     <Text style={{color:Constants.DEFAULT_RED, fontSize:20}}>Register Now</Text>
                 </TouchableOpacity>
             </View>

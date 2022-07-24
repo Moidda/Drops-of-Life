@@ -169,3 +169,88 @@ export default LogInScreen;
     <Picker.Item label="JavaScript" value="js" />
   </Picker>
   ```
+
+# Navigation
+
+## Package Installation
+  - Make sure that the ```react-navigation``` is installed
+  - [Refer](https://reactnavigation.org/docs/getting-started)
+
+## Usage
+  - **App.js**
+  ```javascript
+  import { NavigationContainer } from '@react-navigation/native';
+  import { createNativeStackNavigator } from '@react-navigation/native-stack';
+  
+  const Stack = createNativeStackNavigator();
+  
+  const App = () => {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="StartingScreen"
+                    component={ StartingScreen }
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="LogInScreen"
+                    component={ LogInScreen } 
+                    options={{ headerShown: false }}
+                />
+                ...
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+  };
+  export default App;
+  ```
+- The ```App.js``` should be wrapped in a ```NavigationContainer```
+- Create a ```NativeStackNavigator```
+  ```js
+  const Stack = createNativeStackNavigator()
+  ```
+- ```createNativeStackNavigator()``` returns an object, which we named ```Stack```. contains two properties:
+  - **Screen**
+  - **Navigator** 
+
+  Both of these are react components used for configuring the navigator. The ```Navigator``` should contain ```Screen``` elements as its children to define the configuring of *routes*.
+  ```js
+  <Stack.Navigator>
+      <Stack.Screen 
+          name="LogInScreen"
+          component={ LogInScreen } 
+          options={{ headerShown: false }}
+      />
+      ...
+  </Stack.Navigator>
+  ```
+  Here we can see that, ```Navigator``` contains
+  ```Screen``` as its children.
+
+  Each of the UI Screens that have some sort of navigation in them, should be a ```Screen``` under this ```Navigation```
+
+- **Switching between screens**: 
+  - A *prop* named ```navigation``` is passed down to each **screen component** (screen component is described in previous bullet point).
+  - We can call ```navigation.navigate``` with a **route** name
+  - **route name:** The name property of the Screen
+    ```js
+    <Stack.Screen 
+        name="LogInScreen" // <<-- Route name: "LogInScreen"
+        component={ LogInScreen } 
+        options={{ headerShown: false }}
+    />
+    ```
+  - In ```StartingScreen```:
+    ```js
+    const StartingScreen = (props) => {
+
+      const onPressLogin = () => {
+          props.navigation.navigate("LogInScreen");
+      };
+      ...
+    }
+
+    export default StartingScreen;
+    ```
+    Here, ```StartingScreen``` already has a ```props``` prop passed in as the parameter to of the function. And since ```StartingScreen``` is a **screen component** defined in ```App.js```, a ```navigation``` prop is passed down too. We access that ```navigation``` prop through ```props.navigation```

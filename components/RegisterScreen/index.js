@@ -22,9 +22,13 @@ const RegisterScreen = (props) => {
     const [name, setName] = React.useState("");
     const [selectedLanguage, setSelectedLanguage] = React.useState();
 
-    const onPress = () => {
-        console.warn("You pressed log in");    
+    const onPressLogIn = () => {
+        props.navigation.navigate(Constants.RouteName.login);
     };
+
+    const onPressRegister = () => {
+        console.warn("Register user into system");
+    }
 
     const [selected, setSelected] = React.useState("");
     const data = [
@@ -141,12 +145,12 @@ const RegisterScreen = (props) => {
             color={Constants.DEFAULT_RED}
             textColor={"white"}
             text="Register"
-            onPress={() => {console.warn("You pressed register")}}
+            onPress={onPressRegister}
         />
 
         <View style={styles.registerNowContainer}>
             <Text style={{color:"black", fontSize:20}}>Already have an account? </Text>
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={onPressLogIn}>
                 <Text style={{color:Constants.DEFAULT_RED, fontSize:20}}>Log In</Text>
             </TouchableOpacity>
         </View>
