@@ -1,20 +1,64 @@
-import React from "react";
+import React, { isValidElement } from "react";
 import { View, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import * as Constants from "../../constants";
-import StyledButton from "../StyledButton"
+
+import StyledButton from "../StyledButton";
+
+import { firebase } from '@react-native-firebase/database';
+
+
+const isValidLogIn = async (name, password) => {
+    var isValid = false;
+    var snapshot = await firebase
+                            .app()
+                            .database(Constants.REALTIME_DATABASE_URL)
+                            .ref('/User')
+                            .once('value');
+
+    const users = snapshot.val();
+    for(const u in users) {
+        console.log(users[u]['bloodGroup']);
+        console.log(users[u]['contact']);
+        console.log(users[u]['email']);
+        console.log(users[u]['location']);
+        console.log(users[u]['name']);
+        console.log(users[u]['password']);
+        
+        console.log('');
+    
+        const dbName = users[u]['name'];
+        const dbPass = users[u]['password']; 
+
+        if(name === dbName && password === dbPass)
+            isValid = true;
+    }
+    return isValid;
+};
 
 
 const LogInScreen = (prop) => {
     const [name, setName] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
     const onPressRegister = () => {
         prop.navigation.navigate(Constants.RouteName.register);
     }
 
     const onPressLogIn = () => {
-        console.warn("User is now logged in!");
-        prop.navigation.navigate(Constants.RouteName.home);
+        isValidLogIn(name, password).then(isValid => {
+            if(isValid) {
+                prop.navigation.navigate(Constants.RouteName.home);
+            }
+            else {
+                console.warn("Wrong credentials!!");
+                console.warn("name: " + name);
+                console.warn("password: " + password);
+            }
+        })
+        .catch(function(error) {
+            console.log('Catch Error: isValidLogIn: ' + error.message);
+        });
     }
 
     return (
@@ -35,6 +79,7 @@ const LogInScreen = (prop) => {
                     styles={styles.input}
                     secureTextEntry={false}
                     placeholder="e.g. John Doe"
+                    onChangeText={ (inputName) => setName(inputName) }
                 />
             </View>
 
@@ -48,6 +93,7 @@ const LogInScreen = (prop) => {
                     styles={styles.input}
                     secureTextEntry={true}
                     placeholder="***"
+                    onChangeText={ (inputPassword) => setPassword(inputPassword) }
                 />
             </View>
 

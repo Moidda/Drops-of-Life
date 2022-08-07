@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "286583547289",
+    "project_id": "drops-of-life-606b4",
+    "storage_bucket": "drops-of-life-606b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286583547289:android:5bd85d77aa444d45155f08",
+        "android_client_info": {
+          "package_name": "com.demoproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286583547289-jn250rcg87ssdlh7l9etdo11u7qce29p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1mwtnT9DKNlfOOuzuBtunJeXr0WxpH4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286583547289-jn250rcg87ssdlh7l9etdo11u7qce29p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

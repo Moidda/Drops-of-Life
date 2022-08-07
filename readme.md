@@ -254,3 +254,92 @@ export default LogInScreen;
     export default StartingScreen;
     ```
     Here, ```StartingScreen``` already has a ```props``` prop passed in as the parameter to of the function. And since ```StartingScreen``` is a **screen component** defined in ```App.js```, a ```navigation``` prop is passed down too. We access that ```navigation``` prop through ```props.navigation```
+
+
+# Setting Up Firebase
+
+[Documentation](https://rnfirebase.io/)
+
+## Installing using npm/yarn
+```yarn add @react-native-firebase/app```
+
+```yarn add @react-native-firebase/database```
+
+## Create firebase project
+
+## Add firebase to app
+For adding firebase to app, follow the procedure for **kotlin**
+
+
+# Firebase usage
+
+[Documentation](https://rnfirebase.io/database/usage#usage)
+
+Say we have the a table named ```User``` in realtime database of firebase as following:
+
+  ![](https://lh3.googleusercontent.com/pJFpYNSy-R0HwRHvIZO--WNCkVQOaR-KhOyydlKE-VkeZFI5R3MpUJlEeE4USBNfAu_agazSA2lYZxPpmS-GQeHaeMxUKZaYqXpMiFKhe6kQm1Oe6c1YGN1N_qtuxKjil1oBf9KmpsGkuQF1--DiHqltTBLyFN442-7W6lt51EbsygzO402cWi9DxC_jMcWm7hNLYPrl4ei_pFXFocmema35i_UE3jqW4hbhYX0eSGCnIIeD5cz23Pt2Mj_cxNCkmyGwLZZLVdd9l87-8PWv_RAF8tkCXUS0Ru7s9cbBfcn6l3IARM9j5uaPmq-12iDjRKpVZr3DF2boMwwULhNPFLnkBKSmbxsYAmd741f4kLeO6zOsyfJFCCHTr95Qw6Aje1qVTkygwGjQhC8gf8YiKCisin4q5qmNahzhi4pIcv7JqfaRFvgyEei6CyEO2X2rU9rmK0VD_OiVxdKe9viRiJ9-5d8wQepmZH4Ns9z63FuTEuqNU1wp2QhjRRd51GwyC18WkiXj75NzN8OsDvPtPgL1NZ6ajZbzhddn6RyF8fW7GAer5H1nkxRv_W2ljt2HwukPOXhm65W0-yvPwjRqvdFtp_Op2xts6lucDh3kMj4t6Xg1RTGyUoQTg51Iv4va_x-Yw1Rin5y8jt26Y_B6VBAL7SXAwz9AxMgOWDfCPVZJc-9Raa_0EtPJRBLj-1dITICAM_gkXYKnOSHN8cq5BSxnHkp6zBZeuwrblMB3mVnFJ2PDic8=w380-h430-no?authuser=0)
+
+In JSON, the table would look like: 
+
+  ![](https://scontent.xx.fbcdn.net/v/t1.15752-9/283510137_588740299301618_6572747484012401768_n.png?stp=dst-png_p180x540&_nc_cat=111&ccb=1-7&_nc_sid=aee45a&_nc_eui2=AeE7-69DEpJmApd22hoMIgfXxBS93SmymEXEFL3dKbKYRY-mA9ccf1411Jv0EHiKv5H5qKfCT2tX2h6PW2BBXTgF&_nc_ohc=phHoZpwuiPIAX9z54Fj&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVKq_A_flV2yD3daOCvx654DPSRsTQ5vHHLc4TZIwo8HMw&oe=6316BEFA)
+
+
+## Read from database
+
+- To properly read from database, we have to use async functions. 
+- Asyn functions return a Promise.
+- To resolve promise, we have to use ```.then()```
+
+```js
+import { firebase } from '@react-native-firebase/database';
+import * as Constants from "../../constants";
+
+const func = async () => {
+  var snapshot = await firebase
+                .app()
+                .database(Constants.REALTIME_DATABASE_URL)
+                .ref('/User')
+                .once('value');
+
+  // users is an object that contains the JSON representative of the User table
+  // This object can be iterated over to get info about all users
+  const users = snapshot.val();
+  return users;
+};
+
+func.then(users => {
+  for(const u in users) {
+    console.log(users[u]['bloodGroup']);
+    console.log(users[u]['contact']);
+    console.log(users[u]['email']);
+    console.log(users[u]['location']);
+    console.log(users[u]['name']);
+    console.log(users[u]['password']);
+    console.log('');
+  }
+});
+```
+
+## Write to database
+
+We want to enter a new entry in the above ```User``` table
+
+```js
+import { firebase } from '@react-native-firebase/database';
+import * as Constants from "../../constants";
+
+const reference = firebase
+                  .app()
+                  .database(Constants.REALTIME_DATABASE_URL)
+                  .ref('/User')
+                  .push()
+                  .set({
+                      name: 'Moidda',
+                      email: 'moidda@gmail.com',
+                      contact: 'xxx',
+                      location: 'xxx',
+                      bloodGroup: 'O+',
+                      password: '123',
+                  })
+                  .then(() => console.log('Data set.'));
+```

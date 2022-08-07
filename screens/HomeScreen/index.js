@@ -1,12 +1,17 @@
 import React from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, SnapshotViewIOSComponent, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import * as Constants from "../../constants";
 
 import HomeScreenIcon from "../../components/HomeScreenIcon";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const HomeScreen = (props) => {
+    const logOut = () => {
+        props.navigation.navigate(Constants.RouteName.login);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.iconContainerRow}>
@@ -43,6 +48,11 @@ const HomeScreen = (props) => {
                 iconName="ambulance"
                 />
             </View>
+            <TouchableOpacity
+            onPress={logOut}
+            >
+                <Icon name="power-off" size={30} color={Constants.DEFAULT_RED} />
+            </TouchableOpacity>
         </View>
     );
 };

@@ -14,20 +14,81 @@ import * as Constants from "../../constants";
 import styles from "./styles";
 import StyledButton from "../StyledButton";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SelectList from 'react-native-dropdown-select-list'
+import SelectList from 'react-native-dropdown-select-list';
+import { firebase } from '@react-native-firebase/database';
+
+
+function getBloodGroup(bgGroup) {
+    var bloodGroup;
+    if(bgGroup === '1') bloodGroup = "A+";
+    if(bgGroup === '2') bloodGroup = "A-";
+    if(bgGroup === '3') bloodGroup = "B+";
+    if(bgGroup === '4') bloodGroup = "B-";
+    if(bgGroup === '5') bloodGroup = "AB+";
+    if(bgGroup === '6') bloodGroup = "AB-";
+    if(bgGroup === '7') bloodGroup = "O+";
+    if(bgGroup === '8') bloodGroup = "O-";
+    return bloodGroup;
+}
+
+
+async function isValidRegister(email, contact, password, confpass) {
+    if(!(password === confpass)) return false;
+    var snapshot = await firebase
+                    .app()
+                    .database(Constants.REALTIME_DATABASE_URL)
+                    .ref('/User')
+                    .once('value');
+    
+    var isValid = true;
+    const users = snapshot.val();
+    for(const u in users) {
+        if(email === users[u]['email'] || contact === users[u]['contact'])
+            isValid = false;
+    }
+    
+    return isValid;
+}
 
 
 const RegisterScreen = (props) => {
     
     const [name, setName] = React.useState("");
-    const [selectedLanguage, setSelectedLanguage] = React.useState();
+    const [email, setEmail] = React.useState("");
+    const [contactno, setContactno] = React.useState("");
+    const [location, setLocation] = React.useState("");
+    const [bgGroup, setbgGroup] = React.useState("");
+    const [password, setpass] = React.useState("");
+    const [confpass, setconfpass] = React.useState("");
+
 
     const onPressLogIn = () => {
         props.navigation.navigate(Constants.RouteName.login);
     };
 
     const onPressRegister = () => {
-        console.warn("Register user into system");
+        const bloodGroup = getBloodGroup(bgGroup);
+        isValidRegister(email, contactno, password, confpass).then(isValid => {
+            if(isValid) {
+                const reference = firebase
+                    .app()
+                    .database(Constants.REALTIME_DATABASE_URL)
+                    .ref('/User')
+                    .push()
+                    .set({
+                        name: name,
+                        email: email,
+                        contact: contactno,
+                        location: location,
+                        bloodGroup: bloodGroup,
+                        password: password,
+                    })
+                    .then(() => console.log('Data set.'));
+            }
+            else {
+                console.warn("Invalid register");
+            }
+        });
     }
 
     const [selected, setSelected] = React.useState("");
@@ -62,6 +123,7 @@ const RegisterScreen = (props) => {
                 styles={styles.input}
                 secureTextEntry={false}
                 placeholder="Name"
+                onChangeText={newName => setName(newName)}
             />
         </View>
 
@@ -75,6 +137,7 @@ const RegisterScreen = (props) => {
             <TextInput 
                 styles={styles.input}
                 placeholder="email"
+                onChangeText={newMail => setEmail(newMail)}
             />
         </View>
 
@@ -88,6 +151,7 @@ const RegisterScreen = (props) => {
             <TextInput 
                 styles={styles.input}
                 placeholder="contact no"
+                onChangeText={newnum => setContactno(newnum)}
             />
         </View>
 
@@ -101,6 +165,7 @@ const RegisterScreen = (props) => {
             <TextInput 
                 styles={styles.input}
                 placeholder="location"
+                onChangeText={newlocation => setLocation(newlocation)}
             />
         </View>
 
@@ -110,7 +175,7 @@ const RegisterScreen = (props) => {
             setSelected={setSelected} 
             search={false}
             data={data} 
-            onSelect={() => {console.warn("Your blood type is " + selected);}} 
+            onSelect={() => setbgGroup(selected)} 
         />
 
         <View style={styles.inputContainer}>
@@ -124,6 +189,7 @@ const RegisterScreen = (props) => {
                 styles={styles.input}
                 placeholder="password"
                 secureTextEntry={true}
+                onChangeText={newpass => setpass(newpass)}
             />
         </View>
 
@@ -138,6 +204,7 @@ const RegisterScreen = (props) => {
                 styles={styles.input}
                 placeholder="confirm password"
                 secureTextEntry={true}
+                onChangeText={confnewpass => setconfpass(confnewpass)}
             />
         </View>
 
