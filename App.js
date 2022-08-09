@@ -10,12 +10,14 @@ import LogInScreen from "./components/LogInScreen";
 import RegisterScreen from "./components/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
 import HomeScreenIcon from "./components/HomeScreenIcon";
+import CreateRequest from "./screens/CreateRequest";
 
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
     return (
+        // <CreateRequest />
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
@@ -37,6 +39,17 @@ const App = () => {
                     name={Constants.RouteName.home}
                     component={ HomeScreen }
                     options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name={Constants.RouteName.createRequest}
+                    component={ CreateRequest }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: "#fff",
+                        },
+                        headerTintColor: Constants.DEFAULT_RED,
+                        headerTitleAlign: 'center'
+                    } }
                 />
             </Stack.Navigator>
         </NavigationContainer>

@@ -72,6 +72,21 @@ const LogInScreen = (props) => {
 export default LogInScreen;
 ```
 
+## Passing multiple styles to a component
+
+It is possible to pass multiple styles to a component using an array
+
+```js
+<View style={ [styles.container, {marginBottom:30}] }>
+...
+</View>
+```
+
+In the above example, we passed two styles to the view
+  - ```styles.container```
+  - ```{marginBottom:30}``` 
+
+
 # Using States to dynamically handle data in a view
 
 [Youtube](https://www.youtube.com/watch?v=1FiIYaRr148&ab_channel=TheNetNinja)
@@ -125,14 +140,14 @@ export default LogInScreen;
   const [selected, setSelected] = React.useState("");
   
   const data = [
-      {key:'1', value:'A+'},
-      {key:'2', value:'A-'},
-      {key:'3', value:'B+'},
-      {key:'4', value:'B-'},
-      {key:'5', value:'AB+'},
-      {key:'6', value:'AB-'},
-      {key:'7', value:'O+'},
-      {key:'8', value:'O-'},
+      {key:'A+', value:'A+'},
+      {key:'A-', value:'A-'},
+      {key:'B+', value:'B+'},
+      {key:'B-', value:'B-'},
+      {key:'AB+', value:'AB+'},
+      {key:'AB-', value:'AB-'},
+      {key:'O+', value:'O+'},
+      {key:'O-', value:'O-'},
   ];
   
   ...
@@ -148,6 +163,8 @@ export default LogInScreen;
     />
   );
   ```
+- ```data``` is an array of objects, with each object containing a ```key``` and a ```value```. The ```value``` will be displayed in the dropdown, and ```key``` will be the actual value that would be used when an item is selected
+
 
 ## Picker (didn't work well with me)
 
@@ -343,3 +360,79 @@ const reference = firebase
                   })
                   .then(() => console.log('Data set.'));
 ```
+
+
+# AsyncStorage for creating sessions
+
+- **AsyncStorage** can be used to store data locally on the phone. 
+
+- [Documentation](https://react-native-async-storage.github.io/async-storage/docs/install)
+
+
+## Storing Data
+
+- On successful login, we stored user data in the AsyncStorage
+
+  ***LogInScreen/index.js***
+  ```js
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+
+  const storeUserData = async (name, contact, email, location, bloodGroup) => {
+    try {
+      await AsyncStorage.setItem('@name',         name);
+      await AsyncStorage.setItem('@contact',      contact);
+      await AsyncStorage.setItem('@email',        email);
+      await AsyncStorage.setItem('@location',     location);
+      await AsyncStorage.setItem('@bloodGroup',   bloodGroup);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  ```
+
+- Just call ```storeUserData``` with the correct arguments and the data will be stored on ```AsyncStorage```
+
+
+## Read Data
+
+- We can retrieve the data from ```AsyncStorage``` whenever needed
+
+  ***CreateRequest/index.js***
+  ```js
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+
+  const getUserData = async (callBack) => {
+    try {
+      const name = await AsyncStorage.getItem('@name');
+      const email = await AsyncStorage.getItem('@email');
+      const contact = await AsyncStorage.getItem('@contact');
+      const location = await AsyncStorage.getItem('@location');
+      const bloodGroup = await AsyncStorage.getItem('@bloodGroup');
+      callBack(name, email, contact, location, bloodGroup);  
+    } 
+    catch(e) {
+      console.error(e);
+    }
+  }
+  ```
+
+- Since ```getUserData``` is an **async** function, we had to use a ```callBack``` function to actually set the value. 
+
+- ```callBack``` uses ```React.useState``` to set the values
+
+  ***CreateRequest/index.js***
+  ```js
+  const [name, setName] = React.useState('');
+  const [email, setemail] = React.useState('');
+  const [contact, setContact] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [bloodGroup, setBloodGroup] = React.useState('');
+
+  getUserData((name, email, contact, location, bloodGroup) => {
+    setName(name);
+    setEmail(email);
+    setContact(contact);
+    setLocation(location);
+    setBloodGroup(bloodGroup);
+  });
+  ```

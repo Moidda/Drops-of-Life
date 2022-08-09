@@ -1,22 +1,44 @@
+import { 
+    View, 
+    Image, 
+    Text, 
+    SnapshotViewIOSComponent, 
+    TouchableOpacity 
+} from "react-native";
 import React from "react";
-import { View, Image, Text, SnapshotViewIOSComponent, TouchableOpacity } from "react-native";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import styles from "./styles";
 import * as Constants from "../../constants";
-
 import HomeScreenIcon from "../../components/HomeScreenIcon";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
+const clearAll = async () => {
+    try {
+        await AsyncStorage.clear()
+    } catch(e) {
+        console.error(e);
+    }
+};
+
+
 const HomeScreen = (props) => {
     const logOut = () => {
+        clearAll();
         props.navigation.navigate(Constants.RouteName.login);
     };
+
+    const onPressRequest = () => {
+        props.navigation.navigate(Constants.RouteName.createRequest);
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.iconContainerRow}>
                 <HomeScreenIcon 
-                onPress={() => {console.warn("Request")}}
+                onPress={onPressRequest}
                 text="Request"
                 iconName="wpforms"
                 />

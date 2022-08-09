@@ -6,9 +6,23 @@ import * as Constants from "../../constants";
 import StyledButton from "../StyledButton";
 
 import { firebase } from '@react-native-firebase/database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-const isValidLogIn = async (name, password) => {
+const storeUserData = async (name, contact, email, location, bloodGroup) => {
+    try {
+        await AsyncStorage.setItem('@name',         name);
+        await AsyncStorage.setItem('@contact',      contact);
+        await AsyncStorage.setItem('@email',        email);
+        await AsyncStorage.setItem('@location',     location);
+        await AsyncStorage.setItem('@bloodGroup',   bloodGroup);
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+const isValidLogIn = async (email, password) => {
     var isValid = false;
     var snapshot = await firebase
                             .app()
@@ -18,27 +32,26 @@ const isValidLogIn = async (name, password) => {
 
     const users = snapshot.val();
     for(const u in users) {
-        console.log(users[u]['bloodGroup']);
-        console.log(users[u]['contact']);
-        console.log(users[u]['email']);
-        console.log(users[u]['location']);
-        console.log(users[u]['name']);
-        console.log(users[u]['password']);
-        
-        console.log('');
-    
-        const dbName = users[u]['name'];
-        const dbPass = users[u]['password']; 
-
-        if(name === dbName && password === dbPass)
+        const dbEmail = users[u]['email'];
+        const dbPass = users[u]['password'];
+        console.log("userId: " + u); 
+        if(email === dbEmail && password === dbPass) {
             isValid = true;
+            storeUserData(
+                users[u]['name'], 
+                users[u]['contact'], 
+                users[u]['email'], 
+                users[u]['location'], 
+                users[u]['bloodGroup']
+            );
+        }
     }
     return isValid;
 };
 
 
 const LogInScreen = (prop) => {
-    const [name, setName] = React.useState("");
+    const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
     const onPressRegister = () => {
@@ -46,13 +59,13 @@ const LogInScreen = (prop) => {
     }
 
     const onPressLogIn = () => {
-        isValidLogIn(name, password).then(isValid => {
+        isValidLogIn(email, password).then(isValid => {
             if(isValid) {
                 prop.navigation.navigate(Constants.RouteName.home);
             }
             else {
                 console.warn("Wrong credentials!!");
-                console.warn("name: " + name);
+                console.warn("email: " + email);
                 console.warn("password: " + password);
             }
         })
@@ -70,16 +83,17 @@ const LogInScreen = (prop) => {
             </View>
 
             <View style={styles.inputContainer}>
-                <Image 
-                    style={styles.inputImage}
-                    source={require('../../assets/user.png')}
+                <Icon 
+                    style={{marginLeft:20, marginRight: 20}}
+                    name="envelope-o"
+                    size={30}
+                    color={Constants.DEFAULT_RED}
                 />
-                
                 <TextInput 
                     styles={styles.input}
                     secureTextEntry={false}
-                    placeholder="e.g. John Doe"
-                    onChangeText={ (inputName) => setName(inputName) }
+                    placeholder="e.g. JohnDoe@gmail.com"
+                    onChangeText={ (inputEmail) => setEmail(inputEmail) }
                 />
             </View>
 

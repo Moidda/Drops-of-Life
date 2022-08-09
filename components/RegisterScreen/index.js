@@ -18,20 +18,6 @@ import SelectList from 'react-native-dropdown-select-list';
 import { firebase } from '@react-native-firebase/database';
 
 
-function getBloodGroup(bgGroup) {
-    var bloodGroup;
-    if(bgGroup === '1') bloodGroup = "A+";
-    if(bgGroup === '2') bloodGroup = "A-";
-    if(bgGroup === '3') bloodGroup = "B+";
-    if(bgGroup === '4') bloodGroup = "B-";
-    if(bgGroup === '5') bloodGroup = "AB+";
-    if(bgGroup === '6') bloodGroup = "AB-";
-    if(bgGroup === '7') bloodGroup = "O+";
-    if(bgGroup === '8') bloodGroup = "O-";
-    return bloodGroup;
-}
-
-
 async function isValidRegister(email, contact, password, confpass) {
     if(!(password === confpass)) return false;
     var snapshot = await firebase
@@ -67,7 +53,6 @@ const RegisterScreen = (props) => {
     };
 
     const onPressRegister = () => {
-        const bloodGroup = getBloodGroup(bgGroup);
         isValidRegister(email, contactno, password, confpass).then(isValid => {
             if(isValid) {
                 const reference = firebase
@@ -80,7 +65,7 @@ const RegisterScreen = (props) => {
                         email: email,
                         contact: contactno,
                         location: location,
-                        bloodGroup: bloodGroup,
+                        bloodGroup: bgGroup,
                         password: password,
                     })
                     .then(() => console.log('Data set.'));
@@ -90,19 +75,6 @@ const RegisterScreen = (props) => {
             }
         });
     }
-
-    const [selected, setSelected] = React.useState("");
-    const data = [
-        {key:'1', value:'A+'},
-        {key:'2', value:'A-'},
-        {key:'3', value:'B+'},
-        {key:'4', value:'B-'},
-        {key:'5', value:'AB+'},
-        {key:'6', value:'AB-'},
-        {key:'7', value:'O+'},
-        {key:'8', value:'O-'},
-    ];
-
 
     return (
  <View style={styles.container}> 
@@ -172,10 +144,10 @@ const RegisterScreen = (props) => {
         <SelectList
             boxStyles={{marginBottom: "5%", borderColor: Constants.DEFAULT_RED, width: "50%"}}
             placeholder="Blood Group"
-            setSelected={setSelected} 
+            setSelected={setbgGroup} 
             search={false}
-            data={data} 
-            onSelect={() => setbgGroup(selected)} 
+            data={Constants.bloodGroupData} 
+            onSelect={() => {console.warn("Blood Group: " + bgGroup)}} 
         />
 
         <View style={styles.inputContainer}>
