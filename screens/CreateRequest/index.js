@@ -61,7 +61,6 @@ const CreateRequest = (props) => {
         console.log("urgency: " + urgency);
         console.log("note: " + note);
 
-
         const reference = firebase
                         .app()
                         .database(Constants.REALTIME_DATABASE_URL)
@@ -74,6 +73,7 @@ const CreateRequest = (props) => {
                             location: location,
                             name: name,
                             note: note,
+                            requesterContact: userContact,
                             requesterEmail: userEmail,
                             urgency: urgency
                         })
