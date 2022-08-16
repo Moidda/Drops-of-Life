@@ -118,6 +118,29 @@ In the above example, we passed two styles to the view
   export default IconExample;
   ```
 
+
+# Conditional view (Radio Button)
+We can choose to render between two different views based on a condition. This can be helpful for example, in creating a custom radio button
+
+***CreateRequest/index.js***
+```js
+<View style={styles.radioButtonHeader}>
+  <TouchableOpacity onPress={ () => { setUrgency("longTerm"); } }>
+    <View style={styles.radioButton}>
+      {
+        urgency === "longTerm"?
+        <View style={styles.radioButtonSelected} />
+        : null
+      }
+    </View>
+  </TouchableOpacity>    
+
+  <Text style={{width:"90%", marginLeft: 5}} >
+    Long Term
+  </Text>
+</View>
+```
+
 # Scrollable view
 
 - Basic: [ScrollView](https://www.youtube.com/watch?v=W-pg1r6-T0g&ab_channel=TheNetNinja)

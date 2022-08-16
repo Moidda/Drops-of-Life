@@ -20,43 +20,43 @@ const Stack = createNativeStackNavigator();
 const App = () => {
     return (
         // <RequestCard/>
-        <RequestFeed />
+        //<CreateRequest />
 
-        // <NavigationContainer>
-        //     <Stack.Navigator>
-        //         <Stack.Screen
-        //             name={Constants.RouteName.starting}
-        //             component={ StartingScreen }
-        //             options={{ headerShown: false }}
-        //         />
-        //         <Stack.Screen 
-        //             name={Constants.RouteName.login}
-        //             component={ LogInScreen } 
-        //             options={{ headerShown: false }}
-        //         />
-        //         <Stack.Screen
-        //             name={Constants.RouteName.register}
-        //             component={ RegisterScreen }
-        //             options={{ headerShown: false }}
-        //         />
-        //         <Stack.Screen 
-        //             name={Constants.RouteName.home}
-        //             component={ HomeScreen }
-        //             options={{ headerShown: false }}
-        //         />
-        //         <Stack.Screen 
-        //             name={Constants.RouteName.createRequest}
-        //             component={ CreateRequest }
-        //             options={ {
-        //                 headerStyle: {
-        //                     backgroundColor: "#fff",
-        //                 },
-        //                 headerTintColor: Constants.DEFAULT_RED,
-        //                 headerTitleAlign: 'center'
-        //             } }
-        //         />
-        //     </Stack.Navigator>
-        // </NavigationContainer>
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name={Constants.RouteName.starting}
+                    component={ StartingScreen }
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name={Constants.RouteName.login}
+                    component={ LogInScreen } 
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name={Constants.RouteName.register}
+                    component={ RegisterScreen }
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name={Constants.RouteName.home}
+                    component={ HomeScreen }
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name={Constants.RouteName.createRequest}
+                    component={ CreateRequest }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: "#fff",
+                        },
+                        headerTintColor: Constants.DEFAULT_RED,
+                        headerTitleAlign: 'center'
+                    } }
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 };
     

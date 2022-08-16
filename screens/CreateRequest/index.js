@@ -3,7 +3,8 @@ import {
     Image, 
     Text, 
     ScrollView,
-    TextInput
+    TextInput,
+    TouchableOpacity
 } from "react-native";
 
 import React from "react";
@@ -47,7 +48,7 @@ const CreateRequest = (props) => {
     const [ userContact,    setUserContact    ] = React.useState('');
     const [ userEmail,      setUserEmail      ] = React.useState('');
     const [ userLocation,   setUserLocation   ] = React.useState('');
-    const [ userBloodGroup, setUserBloodGroup ] = React.useState('');
+    const [ userBloodGroup, setUserBloodGroup ] = React.useState(''); 
 
     const onPressCreateRequest = () => {
         if(name.length == 0) setName(userName);
@@ -78,6 +79,8 @@ const CreateRequest = (props) => {
                             urgency: urgency
                         })
                         .then(()=>{console.log('Data set')});
+
+        props.navigation.navigate(Constants.RouteName.home);
     };
     
   
@@ -174,21 +177,68 @@ const CreateRequest = (props) => {
             />
         </View>
 
-        <View style={styles.dropDownContainer}>
-            <Icon 
-                style={[styles.inputImage, {marginLeft: 30}]}
-                name="exclamation"
-                size={30}
-                color={Constants.DEFAULT_RED}
-            />
-            <SelectList
-                boxStyles={styles.dropDown}
-                placeholder="Urgency"
-                setSelected={setUrgency} 
-                search={false}
-                data={Constants.urgency.urgencyData} 
-                onSelect={() => {console.warn("Urgency: " + urgency);}} 
-            />
+        <View style={styles.radioButtonContainer}>
+            <View style={styles.radioButtonHeader}>
+                <Icon 
+                    style={[styles.inputImage, {marginLeft: 30}]}
+                    name="exclamation"
+                    size={30}
+                    color={Constants.DEFAULT_RED}
+                />
+
+                <Text style={{width:"90%"}}>
+                    Urgency
+                </Text>
+            </View>
+
+            <View style={styles.radioButtonHeader}>
+                <TouchableOpacity onPress={ () => { setUrgency("immediate"); } }>
+                    <View style={styles.radioButton}>
+                    {
+                        urgency === "immediate"?
+                        <View style={styles.radioButtonSelected} />
+                        : null
+                    }
+                    </View>
+                </TouchableOpacity>    
+
+                <Text style={{width:"90%", marginLeft: 5}} >
+                    Immediate
+                </Text>
+            </View>
+
+            <View style={styles.radioButtonHeader}>
+                <TouchableOpacity onPress={ () => { setUrgency("standBy"); } }>
+                    <View style={styles.radioButton}>
+                    {
+                        urgency === "standBy"?
+                        <View style={styles.radioButtonSelected}/> 
+                        : null
+                    }
+                    </View>
+                </TouchableOpacity>    
+
+                <Text style={{width:"90%", marginLeft: 5}} >
+                    StandBy
+                </Text>
+            </View>
+
+            <View style={styles.radioButtonHeader}>
+                <TouchableOpacity onPress={ () => { setUrgency("longTerm"); } }>
+                    <View style={styles.radioButton}>
+                    {
+                        urgency === "longTerm"?
+                        <View style={styles.radioButtonSelected} />
+                        : null
+                    }
+                    </View>
+                </TouchableOpacity>    
+                
+                <Text style={{width:"90%", marginLeft: 5}} >
+                    Long Term
+                </Text>
+            </View>
+            
         </View>
 
         <View style={styles.inputContainer}>
@@ -225,3 +275,25 @@ const CreateRequest = (props) => {
 };
 
 export default CreateRequest;
+
+
+
+
+
+
+{/* <View style={styles.dropDownContainer}>
+    <Icon 
+        style={[styles.inputImage, {marginLeft: 30}]}
+        name="exclamation"
+        size={30}
+        color={Constants.DEFAULT_RED}
+    />
+    <SelectList
+        boxStyles={styles.dropDown}
+        placeholder="Urgency"
+        setSelected={setUrgency} 
+        search={false}
+        data={Constants.urgency.urgencyData} 
+        onSelect={() => {console.warn("Urgency: " + urgency);}} 
+    />
+</View> */}

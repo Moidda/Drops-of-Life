@@ -52,7 +52,51 @@ const styles = StyleSheet.create({
         width: "60%",
         height: 50,
         backgroundColor: "#ffffff"
+    },
+
+    radioButtonContainer: {
+        flexDirection: 'column',
+        backgroundColor: "#fff",
+        width: "90%",
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: Constants.DEFAULT_RED,
+        borderRadius: 30,
+        marginBottom: 15,
+        marginLeft: 10,
+        resizeMode: 'contain',
+        paddingBottom: 10,
+        paddingTop: 10
+    },
+
+    radioButtonHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 5
+    },
+
+    radioButton: {
+        width: 20,
+        height: 20,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: Constants.DEFAULT_RED,
+        marginLeft: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    radioButtonSelected: {
+        width: 10,
+        height: 10,
+        borderWidth: 5,
+        borderRadius: 5,
+        borderColor: Constants.DEFAULT_RED,
     }
+
+
 });
 
 
