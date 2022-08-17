@@ -1,6 +1,9 @@
 // Colors
 export const DEFAULT_RED = '#FF2156';
 export const LIGHT_GREY = '#d9d9d9';
+export const IMMEDIATE_RGB = '#Ffdfdf';
+export const STANDBY_RGB = '#E6ffd1';
+export const LONGTERM_RGB = '#bbe8ed';
 
 // App.js
 // route names for each screens in navigation stack
@@ -9,7 +12,8 @@ export const RouteName = {
     login: "LogInScreen",
     register: "RegisterScreen",
     home: "HomeScreen",
-    createRequest: "Create Request"
+    createRequest: "Create Request",
+    requestFeed: "RequestFeed"
 };
 
 export const bloodGroupData = [

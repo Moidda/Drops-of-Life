@@ -21,6 +21,7 @@ const App = () => {
     return (
         // <RequestCard/>
         //<CreateRequest />
+        // <RequestFeed/>
 
         <NavigationContainer>
             <Stack.Navigator>
@@ -49,9 +50,21 @@ const App = () => {
                     component={ CreateRequest }
                     options={ {
                         headerStyle: {
-                            backgroundColor: "#fff",
+                            backgroundColor: Constants.DEFAULT_RED,
                         },
-                        headerTintColor: Constants.DEFAULT_RED,
+                        headerTintColor: "#fff",
+                        headerTitleAlign: 'center'
+                    } }
+                />
+
+                <Stack.Screen 
+                    name={Constants.RouteName.requestFeed}
+                    component={ RequestFeed }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: Constants.DEFAULT_RED,
+                        },
+                        headerTintColor: "#fff",
                         headerTitleAlign: 'center'
                     } }
                 />

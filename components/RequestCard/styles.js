@@ -4,6 +4,8 @@ import * as Constants from "../../constants";
 
 const styles = StyleSheet.create({
     container: {
+        width: 370,
+        flex: 1,
         margin: "6%",
         paddingBottom: "2%",
         backgroundColor: Constants.LIGHT_GREY,

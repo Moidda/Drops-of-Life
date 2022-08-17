@@ -5,7 +5,7 @@ import * as Constants from "../../constants";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Constants.LIGHT_GREY,
+        backgroundColor: "#fff",
         justifyContent: 'center',
         alignItems: 'center',
     },

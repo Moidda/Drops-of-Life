@@ -32,7 +32,11 @@ const HomeScreen = (props) => {
 
     const onPressRequest = () => {
         props.navigation.navigate(Constants.RouteName.createRequest);
-    }
+    };
+
+    const onPressDonate = () => {
+        props.navigation.navigate(Constants.RouteName.requestFeed)
+    };
 
     return (
         <View style={styles.container}>
@@ -43,7 +47,7 @@ const HomeScreen = (props) => {
                 iconName="wpforms"
                 />
                 <HomeScreenIcon
-                onPress={() => {console.warn("Donate")}}
+                onPress={onPressDonate}
                 text="Donate"
                 iconName="medkit"
                 />

@@ -8,6 +8,8 @@ from "react-native";
 import React from "react";
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 
 import styles from "./styles";
 import * as Constants from "../../constants";
@@ -25,6 +27,11 @@ const RequestCard = (props) => {
     const requesterContact = props.requesterContact;
     const onPress          = props.onPress;
 
+    var backgroundColor;
+    if(urgency === Constants.urgency.immediate) backgroundColor = Constants.IMMEDIATE_RGB;
+    if(urgency === Constants.urgency.standBy)   backgroundColor = Constants.STANDBY_RGB;
+    if(urgency === Constants.urgency.longTerm)  backgroundColor = Constants.LONGTERM_RGB;
+
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={ onPress }>
@@ -34,13 +41,13 @@ const RequestCard = (props) => {
                     </Text>
                 </View>
                 
-                <View style={styles.innerContainer}>
+                <View style={ [styles.innerContainer, {backgroundColor: backgroundColor}] }>
                     <View style={styles.detailsContainer}>
 
                         <View style={styles.detailItemContainer}>
                             <MaterialCommunityIcons 
                                 name="hospital-building"
-                                size={25}
+                                size={22}
                                 color={Constants.DEFAULT_RED}
                             />
                             <Text style={styles.itemText}>
@@ -49,8 +56,8 @@ const RequestCard = (props) => {
                         </View>
 
                         <View style={styles.detailItemContainer}>
-                            <MaterialCommunityIcons 
-                                name="hospital-building"
+                            <EntypoIcon 
+                                name="location-pin"
                                 size={25}
                                 color={Constants.DEFAULT_RED}
                             />
@@ -61,7 +68,7 @@ const RequestCard = (props) => {
 
                         <View style={styles.detailItemContainer}>
                             <MaterialCommunityIcons 
-                                name="hospital-building"
+                                name="timer-sand"
                                 size={25}
                                 color={Constants.DEFAULT_RED}
                             />
@@ -71,9 +78,9 @@ const RequestCard = (props) => {
                         </View>
 
                         <View style={styles.detailItemContainer}>
-                            <MaterialCommunityIcons 
-                                name="hospital-building"
-                                size={25}
+                            <SimpleLineIcon 
+                                name="note"
+                                size={22}
                                 color={Constants.DEFAULT_RED}
                             />
                             <Text style={styles.itemText}>

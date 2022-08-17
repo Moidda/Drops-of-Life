@@ -57,8 +57,8 @@ const CreateRequest = (props) => {
 
 
     const onPressCreateRequest = () => {
-        if(name.length == 0) setName(userName);
-        if(location.length == 0) setLocation(userLocation);
+        if(name.length === 0) setName(userName);
+        if(location.length === 0) setLocation(userLocation);
 
         console.log("name: " + name);
         console.log("location: " + location);
