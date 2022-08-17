@@ -1,5 +1,5 @@
 // Colors
-export const DEFAULT_RED = '#cf5102';
+export const DEFAULT_RED = '#FF2156';
 export const LIGHT_GREY = '#d9d9d9';
 
 // App.js

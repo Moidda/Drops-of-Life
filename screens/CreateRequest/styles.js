@@ -94,9 +94,61 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderRadius: 5,
         borderColor: Constants.DEFAULT_RED,
-    }
+    },
 
 
+    // modal styles from react-native doc
+    centeredView: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: "ffcccc",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      button: {
+        borderRadius: 20,
+        width: 150,
+        padding: 10,
+        elevation: 2,
+        marginTop: "10%"
+      },
+      buttonOpen: {
+        backgroundColor: Constants.DEFAULT_RED,
+      },
+      buttonClose: {
+        backgroundColor: Constants.DEFAULT_RED,
+      },
+      textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+      },
+
+      SuccesstextStyle: {
+        paddingBottom: 20,
+        color: Constants.DEFAULT_RED,
+        fontWeight: "bold",
+        fontSize: 20,
+        fontFamily: 'serif',
+        textAlign: "center"
+      },
 });
 
 

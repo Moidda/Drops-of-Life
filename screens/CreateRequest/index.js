@@ -4,7 +4,10 @@ import {
     Text, 
     ScrollView,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Pressable,
+    Alert,
+    Modal
 } from "react-native";
 
 import React from "react";
@@ -48,7 +51,10 @@ const CreateRequest = (props) => {
     const [ userContact,    setUserContact    ] = React.useState('');
     const [ userEmail,      setUserEmail      ] = React.useState('');
     const [ userLocation,   setUserLocation   ] = React.useState('');
-    const [ userBloodGroup, setUserBloodGroup ] = React.useState(''); 
+    const [ userBloodGroup, setUserBloodGroup ] = React.useState('');
+    
+    const [ modalVisible,   setModalVisible   ] = React.useState(false); 
+
 
     const onPressCreateRequest = () => {
         if(name.length == 0) setName(userName);
@@ -80,7 +86,7 @@ const CreateRequest = (props) => {
                         })
                         .then(()=>{console.log('Data set')});
 
-        props.navigation.navigate(Constants.RouteName.home);
+        setModalVisible(true);    
     };
     
   
@@ -94,7 +100,239 @@ const CreateRequest = (props) => {
 
     // rendering the screen
     return (
-<View style={styles.container}>
+        <View style={styles.container}>
+        <Modal
+        animationType="slide"
+        visible={modalVisible}
+        >
+            <View style={styles.container}>
+                <Text style={styles.SuccesstextStyle}>
+                    Request Successful!
+                </Text>
+                <Image
+                source={require('../../assets/req-success.png')}
+                />
+                <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => { 
+                    setModalVisible(!modalVisible);
+                    props.navigation.navigate(Constants.RouteName.home);
+                }}
+                >
+                <Text style={styles.textStyle}>
+                    Go Back
+                </Text>
+                </Pressable>
+            </View>
+        </Modal>
+        
+        <ScrollView>
+        <View style={[styles.inputContainer, {marginTop: 15}]}>
+            <Icon 
+                style={styles.inputImage}
+                name="user"
+                size={30}
+                color={Constants.DEFAULT_RED}
+            />
+            <TextInput 
+                style={styles.input}
+                secureTextEntry={false}
+                placeholder="Name"
+                onChangeText={inputName => setName(inputName)}
+                defaultValue={userName}
+            />
+        </View>
+
+        <View style={styles.inputContainer}>
+            <Icon 
+                style={styles.inputImage}
+                name="location-arrow"
+                size={30}
+                color={Constants.DEFAULT_RED}
+            />
+            <TextInput 
+                style={styles.input}
+                secureTextEntry={false}
+                placeholder="Location"
+                onChangeText={inputLocation => setLocation(inputLocation)}
+                defaultValue={userLocation}
+            />
+        </View>
+
+        <View style={styles.inputContainer}>
+            <Icon 
+                style={styles.inputImage}
+                name="hospital-o"
+                size={30}
+                color={Constants.DEFAULT_RED}
+            />
+            <TextInput 
+                style={styles.input}
+                secureTextEntry={false}
+                placeholder="Hospital"
+                onChangeText={inputHospital => setHospital(inputHospital)}
+            />
+        </View>
+
+        <View style={styles.dropDownContainer}>
+            <Icon 
+                style={[styles.inputImage, {marginLeft: 25}]}
+                name="tint"
+                size={30}
+                color={Constants.DEFAULT_RED}
+            />
+            <SelectList
+                boxStyles={styles.dropDown}
+                placeholder="Blood Group"
+                setSelected={setBloodGroup} 
+                search={false}
+                data={Constants.bloodGroupData} 
+                onSelect={() => {console.warn("Your blood type is " + bloodGroup);}} 
+            />
+        </View>
+
+        <View style={styles.dropDownContainer}>
+            <MaterialIcon 
+                style={styles.inputImage}
+                name="iv-bag"
+                size={30}
+                color={Constants.DEFAULT_RED}
+            />
+            <SelectList
+                boxStyles={styles.dropDown}
+                placeholder="Amount of blood"
+                setSelected={setBloodAmount} 
+                search={false}
+                data={Constants.bloodAmountData} 
+                onSelect={() => {console.warn("You need " + bloodAmount);}} 
+            />
+        </View>
+
+        <View style={styles.radioButtonContainer}>
+            <View style={styles.radioButtonHeader}>
+                <Icon 
+                    style={[styles.inputImage, {marginLeft: 30}]}
+                    name="exclamation"
+                    size={30}
+                    color={Constants.DEFAULT_RED}
+                />
+
+                <Text style={{width:"90%"}}>
+                    Urgency
+                </Text>
+            </View>
+
+            <View style={styles.radioButtonHeader}>
+                <TouchableOpacity onPress={ () => { setUrgency("immediate"); } }>
+                    <View style={styles.radioButton}>
+                    {
+                        urgency === "immediate"?
+                        <View style={styles.radioButtonSelected} />
+                        : null
+                    }
+                    </View>
+                </TouchableOpacity>    
+
+                <Text style={{width:"90%", marginLeft: 5}} >
+                    Immediate
+                </Text>
+            </View>
+
+            <View style={styles.radioButtonHeader}>
+                <TouchableOpacity onPress={ () => { setUrgency("standBy"); } }>
+                    <View style={styles.radioButton}>
+                    {
+                        urgency === "standBy"?
+                        <View style={styles.radioButtonSelected}/> 
+                        : null
+                    }
+                    </View>
+                </TouchableOpacity>    
+
+                <Text style={{width:"90%", marginLeft: 5}} >
+                    StandBy
+                </Text>
+            </View>
+
+            <View style={styles.radioButtonHeader}>
+                <TouchableOpacity onPress={ () => { setUrgency("longTerm"); } }>
+                    <View style={styles.radioButton}>
+                    {
+                        urgency === "longTerm"?
+                        <View style={styles.radioButtonSelected} />
+                        : null
+                    }
+                    </View>
+                </TouchableOpacity>    
+                
+                <Text style={{width:"90%", marginLeft: 5}} >
+                    Long Term
+                </Text>
+            </View>
+            
+        </View>
+
+        <View style={styles.inputContainer}>
+            <Icon 
+                style={styles.inputImage}
+                name="file-text-o"
+                size={30}
+                color={Constants.DEFAULT_RED}
+            />
+            <TextInput 
+                style={styles.input}
+                secureTextEntry={false}
+                placeholder="note"
+                onChangeText={inputNote => setNote(inputNote)}
+            />
+
+            
+        </View>
+        
+        <Text>User Data from session:</Text>
+        <Text>name: {userName}</Text>
+        <Text>email: {userEmail}</Text>
+        <Text>contact: {userContact}</Text>
+        <Text>location: {userLocation}</Text>
+        <Text>bloodGroup: {userBloodGroup}</Text>
+
+        <StyledButton 
+            color={Constants.DEFAULT_RED}
+            textColor="#ffffff"
+            text="Create Request"
+            onPress={onPressCreateRequest}
+        />
+    </ScrollView>
+
+    </View>
+    );
+};
+
+export default CreateRequest;
+
+
+
+
+
+
+{/* <View style={styles.dropDownContainer}>
+    <Icon 
+        style={[styles.inputImage, {marginLeft: 30}]}
+        name="exclamation"
+        size={30}
+        color={Constants.DEFAULT_RED}
+    />
+    <SelectList
+        boxStyles={styles.dropDown}
+        placeholder="Urgency"
+        setSelected={setUrgency} 
+        search={false}
+        data={Constants.urgency.urgencyData} 
+        onSelect={() => {console.warn("Urgency: " + urgency);}} 
+    />
+</View> */}
+
+{/* <View style={styles.container}>
     <ScrollView>
         <View style={[styles.inputContainer, {marginTop: 15}]}>
             <Icon 
@@ -254,6 +492,8 @@ const CreateRequest = (props) => {
                 placeholder="note"
                 onChangeText={inputNote => setNote(inputNote)}
             />
+
+            
         </View>
         
         <Text>User Data from session:</Text>
@@ -270,30 +510,5 @@ const CreateRequest = (props) => {
             onPress={onPressCreateRequest}
         />
     </ScrollView>
-</View>
-    );
-};
-
-export default CreateRequest;
-
-
-
-
-
-
-{/* <View style={styles.dropDownContainer}>
-    <Icon 
-        style={[styles.inputImage, {marginLeft: 30}]}
-        name="exclamation"
-        size={30}
-        color={Constants.DEFAULT_RED}
-    />
-    <SelectList
-        boxStyles={styles.dropDown}
-        placeholder="Urgency"
-        setSelected={setUrgency} 
-        search={false}
-        data={Constants.urgency.urgencyData} 
-        onSelect={() => {console.warn("Urgency: " + urgency);}} 
-    />
 </View> */}
+
