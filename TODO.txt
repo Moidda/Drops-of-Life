@@ -9,7 +9,6 @@ TODO:
 
 * Create a profile module
 
-* Create a pop up when trying to call (conditional view may be?)
 
 
 
@@ -23,3 +22,5 @@ DONE:
     - By urgency
 
 * Locations should be fixed and hardcoded
+
+* Create a pop up when trying to call (conditional view may be?)

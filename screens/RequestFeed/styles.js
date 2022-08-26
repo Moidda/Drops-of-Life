@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     filtertextStyle: {
         color: Constants.DEFAULT_RED,
         fontWeight: "bold",
-        marginRight: "70%",
         fontSize: 15,
         marginBottom: 5
       },

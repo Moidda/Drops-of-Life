@@ -4,8 +4,11 @@ import {
     Text, 
     ScrollView, 
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Modal,
+    Pressable
 } from "react-native";
+
 import React from "react";
 import { firebase } from '@react-native-firebase/database';
 
@@ -15,6 +18,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import styles from "./styles";
 import * as Constants from "../../constants";
 import RequestCard from "../../components/RequestCard";
+import Contact from "../../components/Contact";
 import { BaseRouter } from "@react-navigation/native";
 
 
@@ -38,6 +42,8 @@ const RequestFeed = (props) => {
     const [ filterData, setFilterData  ] = React.useState('');
     const [ isFilterOn, setIsFilterOn  ] = React.useState(false);
     const [ urgency,    setUrgency     ] = React.useState('');
+    const [ modalVisible, setModalVisible ] = React.useState(false);
+    const [ modalContact, setModalContact ] = React.useState('');
 
 
     React.useEffect(() => {
@@ -45,7 +51,6 @@ const RequestFeed = (props) => {
             setRequests(requests);
             for(var reqId in requests) {
                 var req = requests[reqId];
-                // if(req['urgency'] === 'standBy')
                     tempData.push({
                         key                 : reqId,
                         name                : req['name'],
@@ -92,6 +97,22 @@ const RequestFeed = (props) => {
                     <Text style={styles.filtertextStyle}>
                         Filter By
                     </Text>
+                    {
+                        isFilterOn ?
+                        <AntIcon 
+                            name="caretup" 
+                            size={20} 
+                            color={Constants.DEFAULT_RED}
+                            style={{marginLeft: '4%', marginRight: '60%'}}
+                        />
+                        :
+                        <AntIcon 
+                            name="caretdown" 
+                            size={20} 
+                            color={Constants.DEFAULT_RED}
+                            style={{marginLeft: '4%', marginRight: '60%'}}
+                        />
+                    }
                 </View>
             </TouchableOpacity>
 
@@ -148,7 +169,21 @@ const RequestFeed = (props) => {
                 </View>
                 :
                 null
-            }            
+            }
+
+            <Modal
+                animationType="slide"
+                visible={modalVisible}
+                transparent={true}
+            >   
+                <View style={{justifyContent:'center', alignItems:'center'}}>
+                    <Contact 
+                    contactno={modalContact} 
+                    onPressCancel={ () => { setModalVisible(false) }}
+                    />
+                </View>
+            </Modal>
+           
             
             <FlatList 
                 data={filterData}
@@ -163,7 +198,8 @@ const RequestFeed = (props) => {
                         bloodAmount      = { item.bloodAmount      }
                         requesterContact = { item.requesterContact }
                         onPress          = { () => {
-                            console.warn('Call: ' + item.requesterContact);
+                            setModalVisible(true); 
+                            setModalContact(item.requesterContact);
                         }}
                     />
                 )}
