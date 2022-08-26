@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const storeUserData = async (name, contact, email, location, bloodGroup) => {
     try {
+        location = JSON.stringify(location);
         await AsyncStorage.setItem('@name',         name);
         await AsyncStorage.setItem('@contact',      contact);
         await AsyncStorage.setItem('@email',        email);
@@ -34,7 +35,7 @@ const isValidLogIn = async (email, password) => {
     for(const u in users) {
         const dbEmail = users[u]['email'];
         const dbPass = users[u]['password'];
-        console.log("userId: " + u); 
+        
         if(email === dbEmail && password === dbPass) {
             isValid = true;
             storeUserData(
@@ -65,8 +66,8 @@ const LogInScreen = (prop) => {
             }
             else {
                 console.warn("Wrong credentials!!");
-                console.warn("email: " + email);
-                console.warn("password: " + password);
+                console.log("email: " + email);
+                console.log("password: " + password);
             }
         })
         .catch(function(error) {

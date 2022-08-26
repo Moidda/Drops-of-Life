@@ -1,0 +1,25 @@
+TODO:
+------------------------------------------
+* Request:
+    - implement a state
+
+* Filter Requests:
+    - By blood group
+    - By location
+
+* Create a profile module
+
+* Create a pop up when trying to call (conditional view may be?)
+
+
+
+DONE:
+------------------------------------------
+* CreateRequest:
+    - Fix auto fill (name, location)
+    - Mandatory field checking
+
+* Filter Requests:
+    - By urgency
+
+* Locations should be fixed and hardcoded

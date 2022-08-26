@@ -16,6 +16,7 @@ import StyledButton from "../StyledButton";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SelectList from 'react-native-dropdown-select-list';
 import { firebase } from '@react-native-firebase/database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 async function isValidRegister(email, contact, password, confpass) {
@@ -35,6 +36,18 @@ async function isValidRegister(email, contact, password, confpass) {
     
     return isValid;
 }
+
+const storeUserData = async (name, contact, email, location, bloodGroup) => {
+    try {
+      await AsyncStorage.setItem('@name',         name);
+      await AsyncStorage.setItem('@contact',      contact);
+      await AsyncStorage.setItem('@email',        email);
+      await AsyncStorage.setItem('@location',     JSON.stringify(location));
+      await AsyncStorage.setItem('@bloodGroup',   bloodGroup);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
 
 const RegisterScreen = (props) => {
@@ -68,7 +81,12 @@ const RegisterScreen = (props) => {
                         bloodGroup: bgGroup,
                         password: password,
                     })
-                    .then(() => console.log('Data set.'));
+                    .then(() => {
+                        console.log('Data set.');
+                        storeUserData(name, contactno, email, location, bgGroup).then(() => {
+                            props.navigation.navigate(Constants.RouteName.home);
+                        });
+                    });
             }
             else {
                 console.warn("Invalid register");
@@ -127,28 +145,39 @@ const RegisterScreen = (props) => {
             />
         </View>
 
-        <View style={styles.inputContainer}>
+        <View style={styles.dropDownContainer}>
             <Icon 
                 style={styles.inputImage}
                 name="location-arrow"
                 size={30}
                 color={Constants.DEFAULT_RED}
             />
-            <TextInput 
-                styles={styles.input}
-                placeholder="location"
-                onChangeText={newlocation => setLocation(newlocation)}
+            <SelectList
+                boxStyles={styles.selectList}
+                placeholder="Location"
+                setSelected={setLocation} 
+                search={false}
+                data={Constants.LocationData} 
+                onSelect={()=>{}}
             />
         </View>
 
-        <SelectList
-            boxStyles={{marginBottom: "5%", borderColor: Constants.DEFAULT_RED, width: "50%"}}
-            placeholder="Blood Group"
-            setSelected={setbgGroup} 
-            search={false}
-            data={Constants.bloodGroupData} 
-            onSelect={() => {console.warn("Blood Group: " + bgGroup)}} 
-        />
+        <View style={styles.dropDownContainer}>
+            <Icon 
+                style={styles.inputImage}
+                name="tint"
+                size={30}
+                color={Constants.DEFAULT_RED}
+            />
+            <SelectList
+                boxStyles={styles.selectList}
+                placeholder="Blood Group"
+                setSelected={setbgGroup} 
+                search={false}
+                data={Constants.bloodGroupData} 
+                onSelect={() => {}} 
+            />
+        </View>
 
         <View style={styles.inputContainer}>
             <Icon 

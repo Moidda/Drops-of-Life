@@ -413,7 +413,14 @@ const reference = firebase
   }
   ```
 
+
 - Just call ```storeUserData``` with the correct arguments and the data will be stored on ```AsyncStorage```
+
+- AsyncStorage seems to only store string values. 
+
+- To store JSON objects, use JSON.stringigy(object) to store the object
+
+- While reading the stringified object, use JSON.parse(stringifiedObject)
 
 
 ## Read Data
@@ -459,3 +466,28 @@ const reference = firebase
     setBloodGroup(bloodGroup);
   });
   ```
+
+
+# Calling a function only once when a screen loads
+
+The create request form is pre-filled with user name and user location once the create request screen is loaded
+
+```js
+React.useEffect(() => {code to execute once}, []);
+```
+
+***CreateRequest/index.js***
+```js
+React.useEffect(() => {
+  getUserData((name, email, contact, location, bloodGroup) => {
+    setUserName(name);
+    setUserEmail(email);
+    setUserContact(contact);
+    setUserLocation(location);
+    setUserBloodGroup(bloodGroup);
+    // prefill form information with user data
+    setName(name);
+    setLocation(location);
+  });
+}, []);
+```

@@ -1,6 +1,0 @@
-CreateRequest:
-    - Fix auto fill (name, location)
-    - Mandatory field checking
-
-Request:
-    - implement a state

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Constants.DEFAULT_RED,
         borderRadius: 30,
-        marginBottom: 15,
+        marginBottom: 10,
         marginLeft: 10,
         resizeMode: 'contain',
         paddingBottom: 10,
@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
       },
 
     filterContainer: {
-        paddingTop: 5,
+        paddingTop: 10,
+        paddingBottom: 5,
         flexDirection: "row"
-        
     }  
 });
 

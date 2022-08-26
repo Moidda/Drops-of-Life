@@ -13,7 +13,7 @@ export const RouteName = {
     register: "RegisterScreen",
     home: "HomeScreen",
     createRequest: "Create Request",
-    requestFeed: "RequestFeed"
+    requestFeed: "Request Feed"
 };
 
 export const bloodGroupData = [
@@ -47,4 +47,48 @@ export const urgency = {
     ]
 };
 
+export const RequestState = {
+    pending: "pending",
+    donated: "donated"
+};
+
 export const REALTIME_DATABASE_URL = "https://drops-of-life-606b4-default-rtdb.asia-southeast1.firebasedatabase.app/";
+
+export const LocationData = [
+    {
+        key: { name: "Dhanmondi", latitude: 23.7461, longitude: 90.3742 },
+        value: "Dhanmondi" 
+    },
+    {
+        key: { name: "Mohammadpur", latitude: 23.7662, longitude: 90.3589 },
+        value: "Mohammadpur" 
+    },
+    {
+        key: { name: "Shyamoli", latitude: 23.7710, longitude: 90.3639 },
+        value: "Shyamoli" 
+    },
+    {
+        key: { name: "Mipur", latitude: 23.8223, longitude: 90.3654 },
+        value: "Mirpur" 
+    },
+    {
+        key: { name: "Ajimpur", latitude: 23.7286, longitude: 90.3854 },
+        value: "Ajimpur" 
+    },
+    {
+        key: { name: "Motijheel", latitude: 23.7330, longitude: 90.4172 },
+        value: "Motijheel" 
+    },
+    {
+        key: { name: "Banani", latitude: 23.7937, longitude: 90.4066 },
+        value: "Banani" 
+    },
+    {
+        key: { name: "Gulshan", latitude: 23.7925, longitude: 90.4078 },
+        value: "Gulshan" 
+    },
+    {
+        key: { name: "Badda", latitude: 23.7805, longitude: 90.4267 },
+        value: "Badda" 
+    },
+];

@@ -9,13 +9,14 @@ const HomeScreenIcon = (props) => {
     const onPress = props.onPress;
     const text = props.text;
     const iconName = props.iconName;
+    const iconSize = props.iconSize;
 
     return (
     <TouchableOpacity
         style={styles.container}
         onPress={onPress}
     >
-        <Icon name={iconName} size={50} color="white" />
+        <Icon name={iconName} size={iconSize} color="white" />
         <Text style={{fontSize:15, color:"white"}}>{text}</Text>
     </TouchableOpacity>
     );

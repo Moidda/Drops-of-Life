@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     dropDown: {
         borderWidth: 0,
         borderColor: Constants.DEFAULT_RED, 
-        width: "60%",
+        width: 300,
         height: 50,
         backgroundColor: "#ffffff"
     },

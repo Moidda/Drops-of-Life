@@ -49,7 +49,27 @@ const styles = StyleSheet.create({
     },
     input: {
         width: "100%",
-        resizeMode: 'contain'
+        // resizeMode: 'contain'
+    },
+
+    dropDownContainer: {
+        flexDirection: 'row',
+        backgroundColor: "#fff",
+        width: "90%",
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: Constants.DEFAULT_RED,
+        borderRadius: 30,
+        marginBottom: 15,
+        resizeMode: 'stretch'
+    },
+
+    selectList: {
+        borderWidth: 0,
+        borderColor: Constants.DEFAULT_RED, 
+        width: 200,
+        height: 45,
+        backgroundColor: "#ffffff"
     },
 
     registerNowContainer: {

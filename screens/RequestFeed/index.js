@@ -36,6 +36,7 @@ const RequestFeed = (props) => {
     const [ requests,   setRequests    ] = React.useState('');
     const [ data,       setData        ] = React.useState('');
     const [ filterData, setFilterData  ] = React.useState('');
+    const [ isFilterOn, setIsFilterOn  ] = React.useState(false);
     const [ urgency,    setUrgency     ] = React.useState('');
 
 
@@ -81,66 +82,73 @@ const RequestFeed = (props) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.filterContainer}>
-                <AntIcon
-                    name="bars"
-                    size={20}
-                    color={Constants.DEFAULT_RED}
-                />
-                <Text style={styles.filtertextStyle}>
-                    Filter By
-                </Text>
-            </View>    
-
-            <View style={styles.radioButtonContainer}>
-                <View style={styles.radioButtonHeader}>
-                    <TouchableOpacity onPress={ (urgency) => onPressUrgency(Constants.urgency.immediate) }>
-                        <View style={styles.radioButton}>
-                        {
-                            urgency === "immediate"?
-                            <View style={styles.radioButtonSelected} />
-                            : null
-                        }
-                        </View>
-                    </TouchableOpacity>    
-
-                    <Text style={styles.urgencyTextStyle} >
-                        Immediate
+            <TouchableOpacity onPress={()=>{ setIsFilterOn(!isFilterOn) }}>
+                <View style={styles.filterContainer}>
+                    <AntIcon
+                        name="bars"
+                        size={20}
+                        color={Constants.DEFAULT_RED}
+                    />
+                    <Text style={styles.filtertextStyle}>
+                        Filter By
                     </Text>
                 </View>
+            </TouchableOpacity>
 
-                <View style={styles.radioButtonHeader}>
-                    <TouchableOpacity onPress={ (urgency) => onPressUrgency(Constants.urgency.standBy) }>
-                        <View style={styles.radioButton}>
-                        {
-                            urgency === "standBy"?
-                            <View style={styles.radioButtonSelected}/> 
-                            : null
-                        }
-                        </View>
-                    </TouchableOpacity>    
+            {
+                isFilterOn ?
+                <View style={styles.radioButtonContainer}>
+                    <View style={styles.radioButtonHeader}>
+                        <TouchableOpacity onPress={ (urgency) => onPressUrgency(Constants.urgency.immediate) }>
+                            <View style={styles.radioButton}>
+                            {
+                                urgency === "immediate"?
+                                <View style={styles.radioButtonSelected} />
+                                : null
+                            }
+                            </View>
+                        </TouchableOpacity>    
 
-                    <Text style={styles.urgencyTextStyle} >
-                        StandBy
-                    </Text>
+                        <Text style={styles.urgencyTextStyle} >
+                            Immediate
+                        </Text>
+                    </View>
+
+                    <View style={styles.radioButtonHeader}>
+                        <TouchableOpacity onPress={ (urgency) => onPressUrgency(Constants.urgency.standBy) }>
+                            <View style={styles.radioButton}>
+                            {
+                                urgency === "standBy"?
+                                <View style={styles.radioButtonSelected}/> 
+                                : null
+                            }
+                            </View>
+                        </TouchableOpacity>    
+
+                        <Text style={styles.urgencyTextStyle} >
+                            StandBy
+                        </Text>
+                    </View>
+
+                    <View style={styles.radioButtonHeader}>
+                        <TouchableOpacity onPress={ (urgency) => onPressUrgency(Constants.urgency.longTerm) }>
+                            <View style={styles.radioButton}>
+                            {
+                                urgency === "longTerm"?
+                                <View style={styles.radioButtonSelected} />
+                                : null
+                            }
+                            </View>
+                        </TouchableOpacity>    
+                        
+                        <Text style={styles.urgencyTextStyle}>
+                            Long Term
+                        </Text>
+                    </View>    
                 </View>
-
-                <View style={styles.radioButtonHeader}>
-                    <TouchableOpacity onPress={ (urgency) => onPressUrgency(Constants.urgency.longTerm) }>
-                        <View style={styles.radioButton}>
-                        {
-                            urgency === "longTerm"?
-                            <View style={styles.radioButtonSelected} />
-                            : null
-                        }
-                        </View>
-                    </TouchableOpacity>    
-                    
-                    <Text style={styles.urgencyTextStyle}>
-                        Long Term
-                    </Text>
-                </View>    
-            </View>
+                :
+                null
+            }            
             
             <FlatList 
                 data={filterData}
@@ -148,7 +156,7 @@ const RequestFeed = (props) => {
                     <RequestCard 
                         name             = { item.name             }
                         hospital         = { item.hospital         }
-                        location         = { item.location         }
+                        location         = { item.location.name    }
                         urgency          = { item.urgency          }
                         note             = { item.note             }
                         bloodGroup       = { item.bloodGroup       }

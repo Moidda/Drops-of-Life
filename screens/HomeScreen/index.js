@@ -43,18 +43,21 @@ const HomeScreen = (props) => {
             <View style={styles.iconContainerRow}>
                 <HomeScreenIcon 
                 onPress={onPressRequest}
-                text="Request"
+                text="Create Request"
                 iconName="wpforms"
+                iconSize={40}
                 />
                 <HomeScreenIcon
                 onPress={onPressDonate}
                 text="Donate"
                 iconName="medkit"
+                iconSize={50}
                 />
                 <HomeScreenIcon
                 onPress={() => {console.warn("History")}}
                 text="History"
                 iconName="history"
+                iconSize = {50}
                 />
             </View>
             <View style={styles.iconContainerRow}>
@@ -62,16 +65,19 @@ const HomeScreen = (props) => {
                 onPress={() => {console.warn("Organization")}}
                 text="Organization"
                 iconName="hospital-o"
+                iconSize = {50}
                 />
                 <HomeScreenIcon
                 onPress={() => {console.warn("Long Term")}}
                 text="Long Term"
                 iconName="bed"
+                iconSize = {50}
                 />
                 <HomeScreenIcon
                 onPress={() => {console.warn("Ambulance")}}
                 text="Ambulance"
                 iconName="ambulance"
+                iconSize = {50}
                 />
             </View>
             <TouchableOpacity
