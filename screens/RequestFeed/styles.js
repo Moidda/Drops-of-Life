@@ -9,10 +9,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },  
     
+    filterByContainer: {
+        width: 370,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    filterByBloodGroup: {
+        width: 150,
+        borderColor: Constants.DEFAULT_RED,
+        marginLeft: 5,
+        marginRight: 5
+    },
+
+    filterByLocation: {
+        width: 150,
+        borderColor: Constants.DEFAULT_RED,
+        marginLeft: 5,
+        marginRight: 5
+    },
+
     radioButtonContainer: {
         flexDirection: 'row',
         backgroundColor: "#fff",
-        width: "90%",
+        width: "95%",
         borderWidth: 1,
         borderColor: Constants.DEFAULT_RED,
         borderRadius: 30,

@@ -5,6 +5,10 @@ export const IMMEDIATE_RGB = '#Ffdfdf';
 export const STANDBY_RGB = '#E6ffd1';
 export const LONGTERM_RGB = '#bbe8ed';
 
+// in meters
+export const nearMeDistance = 4000;
+
+
 // App.js
 // route names for each screens in navigation stack
 export const RouteName = {

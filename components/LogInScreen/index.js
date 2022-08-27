@@ -24,6 +24,7 @@ const storeUserData = async (name, contact, email, location, bloodGroup) => {
 }
 
 const isValidLogIn = async (email, password) => {
+    console.log("Retrieving user data from firebase ...");
     var isValid = false;
     var snapshot = await firebase
                             .app()
@@ -35,6 +36,8 @@ const isValidLogIn = async (email, password) => {
     for(const u in users) {
         const dbEmail = users[u]['email'];
         const dbPass = users[u]['password'];
+
+        console.log("dbEmail:" + dbEmail + ", dbPass:" + dbPass);
         
         if(email === dbEmail && password === dbPass) {
             isValid = true;

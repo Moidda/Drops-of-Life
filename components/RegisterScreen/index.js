@@ -66,6 +66,7 @@ const RegisterScreen = (props) => {
     };
 
     const onPressRegister = () => {
+        console.log("Checking user validity. Reading from database ...");
         isValidRegister(email, contactno, password, confpass).then(isValid => {
             if(isValid) {
                 const reference = firebase

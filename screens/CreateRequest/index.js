@@ -84,15 +84,21 @@ const CreateRequest = (props) => {
             return;
         }
 
+        var today = new Date();
 
         console.log("");
-        console.log("name: " + name);
-        console.log("location: " + JSON.stringify(location));
-        console.log("hospital: " + hospital);
-        console.log("bloodGroup: " + bloodGroup);
         console.log("bloodAmount: " + bloodAmount);
-        console.log("urgency: " + urgency);
+        console.log("bloodGroup: " + bloodGroup);
+        console.log("today: " + today);
+        console.log("hospital: " + hospital);
+        console.log("location: " + JSON.stringify(location));
+        console.log("name: " + name);
         console.log("note: " + note);
+        console.log("requesterContact: " + userContact);
+        console.log("requesterEmail: " + userEmail);
+        console.log("reqeusterLocation: " + JSON.stringify(userLocation));
+        console.log("state: " + Constants.RequestState.pending);
+        console.log("urgency: " + urgency);
 
         const reference = firebase
                         .app()
@@ -102,12 +108,14 @@ const CreateRequest = (props) => {
                         .set({
                             bloodAmount: bloodAmount,
                             bloodGroup: bloodGroup,
+                            date: JSON.stringify(today),
                             hospital: hospital,
                             location: location,
                             name: name,
                             note: note,
                             requesterContact: userContact,
                             requesterEmail: userEmail,
+                            requesterLocation: userLocation,
                             state: Constants.RequestState.pending,
                             urgency: urgency
                         })
