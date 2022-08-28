@@ -3,7 +3,8 @@ import {
     Image, 
     Text, 
     SnapshotViewIOSComponent, 
-    TouchableOpacity 
+    TouchableOpacity, 
+    Pressable
 } from "react-native";
 import React from "react";
 
@@ -23,11 +24,46 @@ const clearAll = async () => {
     }
 };
 
+const getUserData = async () => {
+    try {
+        const name = await AsyncStorage.getItem('@name');
+        const email = await AsyncStorage.getItem('@email');
+        const contact = await AsyncStorage.getItem('@contact');
+        const locationJSON = await AsyncStorage.getItem('@location');
+        const location = JSON.parse(locationJSON);
+        const bloodGroup = await AsyncStorage.getItem('@bloodGroup');
+        return [name, email, contact, location, bloodGroup];
+    } 
+    catch(e) {
+        console.error(e);
+    }
+}
+
 
 const HomeScreen = (props) => {
+
+    const [ userName, setUserName ] = React.useState('');
+    const [ userEmail, setUserEmail ] = React.useState('');
+    const [ userContact, setUserContact ] = React.useState('');
+    const [ userLocation, setUserLocation ] = React.useState('');
+    const [ userBloodGroup, setUserBloodGroup ] = React.useState('');
+
+    React.useEffect(() => {
+        getUserData().then((ret) => {
+            const [name, email, contact, location, bloodGroup] = ret;
+            setUserName(name);
+            setUserContact(contact);
+            setUserLocation(location);
+            setUserBloodGroup(bloodGroup)
+            setUserEmail(email);
+            setUserEmail(ret[1]);
+        });
+    }, []);
+    
     const logOut = () => {
-        clearAll();
-        props.navigation.navigate(Constants.RouteName.login);
+        clearAll().then(() => {
+            props.navigation.navigate(Constants.RouteName.login);
+        });
     };
 
     const onPressRequest = () => {
@@ -44,6 +80,28 @@ const HomeScreen = (props) => {
 
     return (
         <View style={styles.container}>
+            <Pressable style={styles.profileInfoContainer} onPress={()=>{console.warn("profile")}}>
+                <View style={styles.nameLocationContainer}>
+                    <View style={styles.nameLocationRowContainer}>
+                        <Icon name="user" size={20} color={"#fff"}/>
+                        <Text style={styles.nameLocationText}>
+                            {userName}
+                        </Text>
+                    </View>
+                    
+                    <View style={styles.nameLocationRowContainer}>
+                        <Icon name="home" size={25} color={"#fff"}/>
+                        <Text style={styles.nameLocationText}>
+                            {userLocation.name}
+                        </Text>
+                    </View>
+                </View>
+
+                <Text style={styles.bloodGroupText}>
+                    {userBloodGroup}
+                </Text>
+            </Pressable>
+
             <View style={styles.iconContainerRow}>
                 <HomeScreenIcon 
                 onPress={onPressRequest}
@@ -65,16 +123,16 @@ const HomeScreen = (props) => {
                 />
             </View>
             <View style={styles.iconContainerRow}>
+                <HomeScreenIcon
+                onPress={() => {console.warn("Long Term")}}
+                text="Profile"
+                iconName="user"
+                iconSize = {50}
+                />
                 <HomeScreenIcon 
                 onPress={() => {console.warn("Organization")}}
                 text="Organization"
                 iconName="hospital-o"
-                iconSize = {50}
-                />
-                <HomeScreenIcon
-                onPress={() => {console.warn("Long Term")}}
-                text="Long Term"
-                iconName="bed"
                 iconSize = {50}
                 />
                 <HomeScreenIcon
@@ -87,7 +145,10 @@ const HomeScreen = (props) => {
             <TouchableOpacity
             onPress={logOut}
             >
-                <Icon name="power-off" size={30} color={Constants.DEFAULT_RED} />
+                <View style={styles.logOutContainer} >
+                    <Icon name="power-off" size={30} color={Constants.DEFAULT_RED} />
+                    <Text style={styles.logOutText}> Logout </Text>
+                </View>
             </TouchableOpacity>
         </View>
     );
