@@ -16,16 +16,14 @@ import RequestFeed from "./screens/RequestFeed";
 import MyRequests from "./screens/MyRequests";
 import MyRequestFilter from "./screens/MyRequestFilter";
 import MyRequestsCompleted from "./screens/MyRequestsCompleted";
+import Organization from "./screens/Organization";
+import Ambulance from "./screens/Ambulance";
 
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
     return (
-        // <RequestCard/>
-        //<CreateRequest />
-        // <RequestFeed/>
-
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
@@ -99,6 +97,30 @@ const App = () => {
                 <Stack.Screen 
                     name={Constants.RouteName.myRequestsCompleted}
                     component={ MyRequestsCompleted }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: Constants.DEFAULT_RED,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleAlign: 'center'
+                    } }
+                />
+                
+                <Stack.Screen 
+                    name={Constants.RouteName.organization}
+                    component={ Organization }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: Constants.DEFAULT_RED,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleAlign: 'center'
+                    } }
+                />
+
+                <Stack.Screen 
+                    name={Constants.RouteName.ambulance}
+                    component={ Ambulance }
                     options={ {
                         headerStyle: {
                             backgroundColor: Constants.DEFAULT_RED,

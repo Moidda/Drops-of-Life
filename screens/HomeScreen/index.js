@@ -78,6 +78,14 @@ const HomeScreen = (props) => {
         props.navigation.navigate(Constants.RouteName.myRequestsFilter);
     };
 
+    const onPressOrganization = () => {
+        props.navigation.navigate(Constants.RouteName.organization);
+    };
+
+    const onPressAmbulance = () => {
+        props.navigation.navigate(Constants.RouteName.ambulance);
+    };
+
     return (
         <View style={styles.container}>
             <Pressable style={styles.profileInfoContainer} onPress={()=>{console.warn("profile")}}>
@@ -130,13 +138,13 @@ const HomeScreen = (props) => {
                 iconSize = {50}
                 />
                 <HomeScreenIcon 
-                onPress={() => {console.warn("Organization")}}
+                onPress={onPressOrganization}
                 text="Organization"
                 iconName="hospital-o"
                 iconSize = {50}
                 />
                 <HomeScreenIcon
-                onPress={() => {console.warn("Ambulance")}}
+                onPress={onPressAmbulance}
                 text="Ambulance"
                 iconName="ambulance"
                 iconSize = {50}

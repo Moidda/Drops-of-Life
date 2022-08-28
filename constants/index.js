@@ -20,7 +20,9 @@ export const RouteName = {
     requestFeed: "Request Feed",
     myRequestsFilter: 'My Requests',
     myRequests: "Pending Requests",
-    myRequestsCompleted: "Completed Requests"
+    myRequestsCompleted: "Completed Requests",
+    organization: "Organizations",
+    ambulance: "Ambulances"
 };
 
 export const bloodGroupData = [
@@ -60,6 +62,21 @@ export const RequestState = {
 };
 
 export const REALTIME_DATABASE_URL = "https://drops-of-life-606b4-default-rtdb.asia-southeast1.firebasedatabase.app/";
+
+export const OrganizationData = [
+    {key: 1, name: "Badhan Transfusion Center", location: "Dhaka University", contact: "0198769876"},
+    {key: 2, name: "Bangladesh Red Crescent Society", location: "Aurangajeb Road", contact: "0123456"},
+    {key: 3, name: "Quantum Blood Lab", location: "Shantinagar", contact: "0987654321"},
+    {key: 4, name: "Mukti Blood Bank", location: "Shafiullah Road", contact: "0174958"},
+    {key: 5, name: "NICD Blood Bank", location: "College Gate", contact: "76132905"},
+];
+
+export const AmbulanceData = [
+    {key: 1, name: "M ICU Ambulance Service", location: "Green Rd", contact: "0198769876"},
+    {key: 2, name: "Alif Ambulance Service", location: "West Panthapath", contact: "0123456"},
+    {key: 3, name: "Ibn Cina Hospital", location: "Dhanmondi", contact: "0987654321"},
+    {key: 4, name: "Conscious Ambulance Service", location: "Zigatola", contact: "0174958"},
+];
 
 export const LocationData = [
     {
