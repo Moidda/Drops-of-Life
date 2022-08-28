@@ -108,7 +108,7 @@ const CreateRequest = (props) => {
                         .set({
                             bloodAmount: bloodAmount,
                             bloodGroup: bloodGroup,
-                            date: JSON.stringify(today),
+                            date: today.toJSON(),
                             hospital: hospital,
                             location: location,
                             name: name,

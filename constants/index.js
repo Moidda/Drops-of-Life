@@ -17,7 +17,8 @@ export const RouteName = {
     register: "RegisterScreen",
     home: "HomeScreen",
     createRequest: "Create Request",
-    requestFeed: "Request Feed"
+    requestFeed: "Request Feed",
+    myRequests: "My Requests"
 };
 
 export const bloodGroupData = [

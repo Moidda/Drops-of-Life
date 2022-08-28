@@ -35,7 +35,11 @@ const HomeScreen = (props) => {
     };
 
     const onPressDonate = () => {
-        props.navigation.navigate(Constants.RouteName.requestFeed)
+        props.navigation.navigate(Constants.RouteName.requestFeed);
+    };
+
+    const onPressMyRequests = () => {
+        props.navigation.navigate(Constants.RouteName.myRequests);
     };
 
     return (
@@ -54,8 +58,8 @@ const HomeScreen = (props) => {
                 iconSize={50}
                 />
                 <HomeScreenIcon
-                onPress={() => {console.warn("History")}}
-                text="History"
+                onPress={onPressMyRequests}
+                text="My Requests"
                 iconName="history"
                 iconSize = {50}
                 />

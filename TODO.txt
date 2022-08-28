@@ -3,12 +3,8 @@ TODO:
 * Request:
     - implement a state
 
-* Filter Requests:
-    - By blood group
-    - By location
 
 * Create a profile module
-* Request Sorting
 
 
 
@@ -21,6 +17,11 @@ DONE:
 
 * Filter Requests:
     - By urgency
+    - By blood group
+    - By location
+    - By near me
+
+* Request Sorting (oldest first)
 
 * Locations should be fixed and hardcoded
 

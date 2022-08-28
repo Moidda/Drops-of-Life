@@ -42,6 +42,21 @@ locationData.unshift(
 );
 
 
+const sortByTime = (arr) => {
+    var sortedArr = JSON.parse(JSON.stringify(arr));
+    for(var i = 0; i < sortedArr.length; i++) {
+        for(var j = 0; j+1 < sortedArr.length; j++) {
+            if(sortedArr[j+1].date < sortedArr[j].date) {
+                var temp = sortedArr[j];
+                sortedArr[j] = sortedArr[j+1];
+                sortedArr[j+1] = temp;
+            }
+        }
+    }
+    return sortedArr;
+};
+
+
 const getRequests = async () => {
     var snapshot = await firebase
                     .app()
@@ -77,6 +92,7 @@ const RequestFeed = (props) => {
 
     const [ modalVisible, setModalVisible ] = React.useState(false);
     const [ modalContact, setModalContact ] = React.useState('');
+    const [ selfRespondModalVisible, setSelfRespondModalVisible ] = React.useState('false');
 
     // filter states
     const [ filterData,       setFilterData       ] = React.useState('');
@@ -93,41 +109,56 @@ const RequestFeed = (props) => {
     const [ userBloodGroup, setUserBloodGroup ] = React.useState('');
 
 
-    // fill up data with all the requests from database 
-    // and user data from session only once when the screen loads
+    // this function is executed only once when the screen is loaded for the first time
     React.useEffect(() => {
-        getRequests().then(requests => {
-            setRequests(requests);
-            var tempData = [];
-            for(var reqId in requests) {
-                var req = requests[reqId];
-                    tempData.push({
-                        key                 : reqId,
-                        bloodAmount         : req['bloodAmount'],
-                        bloodGroup          : req['bloodGroup'],
-                        date                : req['date'],
-                        hospital            : req['hospital'],
-                        location            : req['location'],
-                        name                : req['name'],
-                        note                : req['note'],
-                        requesterContact    : req['requesterContact'],
-                        requesterEmail      : req['requesterEmail'],
-                        requesterLocation   : req['requesterLocation'],
-                        state               : req['state'],
-                        urgency             : req['urgency'],
-                    });
-            }
-            setData(tempData);
-            setFilterData(tempData);
-        });
-
-        // set user data from session
+        // get user data from the current session
         getUserData((name, email, contact, location, bloodGroup) => {
             setUserName(name);
             setUserEmail(email);
             setUserContact(contact);
             setUserLocation(location);
             setUserBloodGroup(bloodGroup);
+        });
+        // retrive all the requests from the database
+        getRequests().then(requests => {
+            setRequests(requests);
+            var tempData = [];
+            for(var reqId in requests) {
+                var req = requests[reqId];
+                if(req['state'] === Constants.RequestState.donated) 
+                    continue;
+                
+                tempData.push({
+                    key                 : reqId,
+                    bloodAmount         : req['bloodAmount'],
+                    bloodGroup          : req['bloodGroup'],
+                    date                : req['date'],
+                    hospital            : req['hospital'],
+                    location            : req['location'],
+                    name                : req['name'],
+                    note                : req['note'],
+                    requesterContact    : req['requesterContact'],
+                    requesterEmail      : req['requesterEmail'],
+                    requesterLocation   : req['requesterLocation'],
+                    state               : req['state'],
+                    urgency             : req['urgency'],
+                });
+            }
+            // sorting each of the data
+            // immediate -> stand by -> longterm
+            // each urgency should be sorted by oldest request first
+            var immediateData = [], standByData = [], longTermData = [];
+            tempData.forEach(element => {
+                if(element.urgency === Constants.urgency.immediate) immediateData.push(element);
+                if(element.urgency === Constants.urgency.standBy)   standByData.push(element);
+                if(element.urgency === Constants.urgency.longTerm)  longTermData.push(element);
+            });
+            immediateData = sortByTime(immediateData);
+            standByData = sortByTime(standByData);            
+            longTermData = sortByTime(longTermData);
+            var sortedData = immediateData.concat(standByData).concat(longTermData);
+            setData(sortedData);
+            setFilterData(sortedData);
         });
     }, []);
 
@@ -304,9 +335,38 @@ const RequestFeed = (props) => {
             >   
                 <View style={{justifyContent:'center', alignItems:'center'}}>
                     <Contact 
-                    contactno={modalContact} 
+                    titleText="Contact"
+                    contactno={modalContact}
+                    rightButtonText="Cancel" 
                     onPressCancel={ () => { setModalVisible(false) }}
+                    leftButtonText="Call"
+                    onPressLeftButton={() => {console.warn("Copied to clipboard")}}
+                    isDonorFound={false}
                     />
+                </View>
+            </Modal>
+
+            <Modal
+                animationType="slide"
+                visible={selfRespondModalVisible}
+                transparent={true}
+            >   
+                <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                    <TouchableOpacity
+                        onPress={() => { setSelfRespondModalVisible(false)}}
+                        style={{
+                            width: 350, 
+                            height: 100, 
+                            backgroundColor: "#ffffff",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: 20,
+                            borderWidth: 2,
+                            borderColor: Constants.DEFAULT_RED,
+                        }}
+                    >
+                        <Text style={{fontSize: 20, fontFamily: 'sans-serif-medium'}}>You can't respond to your request!</Text>
+                    </TouchableOpacity>    
                 </View>
             </Modal>
            
@@ -324,6 +384,10 @@ const RequestFeed = (props) => {
                         bloodAmount      = { item.bloodAmount      }
                         requesterContact = { item.requesterContact }
                         onPress          = { () => {
+                            if(item.requesterContact === userContact) {
+                                setSelfRespondModalVisible(true);
+                                return;
+                            }
                             setModalVisible(true); 
                             setModalContact(item.requesterContact);
                         }}

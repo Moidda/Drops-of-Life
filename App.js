@@ -13,6 +13,7 @@ import HomeScreenIcon from "./components/HomeScreenIcon";
 import CreateRequest from "./screens/CreateRequest";
 import RequestCard from "./components/RequestCard";
 import RequestFeed from "./screens/RequestFeed";
+import MyRequests from "./screens/MyRequests";
 
 
 const Stack = createNativeStackNavigator();
@@ -60,6 +61,18 @@ const App = () => {
                 <Stack.Screen 
                     name={Constants.RouteName.requestFeed}
                     component={ RequestFeed }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: Constants.DEFAULT_RED,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleAlign: 'center'
+                    } }
+                />
+
+                <Stack.Screen 
+                    name={Constants.RouteName.myRequests}
+                    component={ MyRequests }
                     options={ {
                         headerStyle: {
                             backgroundColor: Constants.DEFAULT_RED,

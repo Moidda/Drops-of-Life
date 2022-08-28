@@ -15,25 +15,33 @@ const Contact = (props) => {
 
     const contactno = props.contactno;
     const onPressCancel = props.onPressCancel;
+    const leftButtonText = props.leftButtonText;
+    const rightButtonText = props.rightButtonText;
+    const onPressLeftButton = props.onPressLeftButton;
+    const titleText = props.titleText;
+    const isDonorFound = props.isDonorFound;
 
     return (
         <View style={styles.container}>
             <Text style={styles.Textstyle}>
-                Contact 
+                {titleText}
             </Text>
-            <Text style={[styles.Textstyle, {color: "#33bbff"}]}>
-                {contactno}
-            </Text>
+            {
+                isDonorFound ?
+                null
+                :
+                <Text style={[styles.Textstyle, {color: "#33bbff"}]}>
+                    {contactno}
+                </Text>
+            }
 
             <View style={styles.buttonContainer}>
                 <Pressable
                     style={[styles.button, {backgroundColor: "#00cc99"}]}
-                    onPress={() => { 
-                        console.warn("Number copied to clipboard.")
-                    }}
+                    onPress={ onPressLeftButton }
                     >
                         <Text style={[styles.ButtonText, {color: "#ffffff"}]}>
-                            Call 
+                            {leftButtonText} 
                         </Text>
                 </Pressable>
 
@@ -42,7 +50,7 @@ const Contact = (props) => {
                     onPress={ onPressCancel }
                     >
                         <Text style={[styles.ButtonText, {color: "#ffffff"}]}>
-                            Cancel
+                            {rightButtonText}
                         </Text>
                 </Pressable>
             </View>
