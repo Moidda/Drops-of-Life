@@ -19,7 +19,8 @@ export const RouteName = {
     createRequest: "Create Request",
     requestFeed: "Request Feed",
     myRequestsFilter: 'My Requests',
-    myRequests: "Pending Requests"
+    myRequests: "Pending Requests",
+    myRequestsCompleted: "Completed Requests"
 };
 
 export const bloodGroupData = [

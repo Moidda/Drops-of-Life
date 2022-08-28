@@ -15,10 +15,10 @@ const MyRequestFilter = (props) => {
                 </View>
             </Pressable>
 
-            <Pressable onPress={() => {console.warn("Pending")}} >
+            <Pressable onPress={() => {props.navigation.navigate(Constants.RouteName.myRequestsCompleted);}} >
                 <View elevation={5} style={[styles.buttonContainer, {backgroundColor: "#49d408"}]}>
                     <Text style={styles.text}>
-                        Previous
+                        Completed
                     </Text>
                 </View>
             </Pressable>
