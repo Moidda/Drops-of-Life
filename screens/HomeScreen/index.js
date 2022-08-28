@@ -39,7 +39,7 @@ const HomeScreen = (props) => {
     };
 
     const onPressMyRequests = () => {
-        props.navigation.navigate(Constants.RouteName.myRequests);
+        props.navigation.navigate(Constants.RouteName.myRequestsFilter);
     };
 
     return (

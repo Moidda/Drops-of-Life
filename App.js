@@ -14,6 +14,7 @@ import CreateRequest from "./screens/CreateRequest";
 import RequestCard from "./components/RequestCard";
 import RequestFeed from "./screens/RequestFeed";
 import MyRequests from "./screens/MyRequests";
+import MyRequestFilter from "./screens/MyRequestFilter";
 
 
 const Stack = createNativeStackNavigator();
@@ -73,6 +74,18 @@ const App = () => {
                 <Stack.Screen 
                     name={Constants.RouteName.myRequests}
                     component={ MyRequests }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: Constants.DEFAULT_RED,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleAlign: 'center'
+                    } }
+                />
+
+                <Stack.Screen 
+                    name={Constants.RouteName.myRequestsFilter}
+                    component={ MyRequestFilter }
                     options={ {
                         headerStyle: {
                             backgroundColor: Constants.DEFAULT_RED,
