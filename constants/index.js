@@ -4,6 +4,7 @@ export const LIGHT_GREY = '#d9d9d9';
 export const IMMEDIATE_RGB = '#Ffdfdf';
 export const STANDBY_RGB = '#E6ffd1';
 export const LONGTERM_RGB = '#bbe8ed';
+export const DEFAULT_GREEN = "#49d408"
 
 // in meters
 export const nearMeDistance = 4000;
@@ -22,7 +23,8 @@ export const RouteName = {
     myRequests: "Pending Requests",
     myRequestsCompleted: "Completed Requests",
     organization: "Organizations",
-    ambulance: "Ambulances"
+    ambulance: "Ambulances",
+    profile: "My Profile"
 };
 
 export const bloodGroupData = [

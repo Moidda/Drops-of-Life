@@ -18,6 +18,7 @@ import MyRequestFilter from "./screens/MyRequestFilter";
 import MyRequestsCompleted from "./screens/MyRequestsCompleted";
 import Organization from "./screens/Organization";
 import Ambulance from "./screens/Ambulance";
+import Profile from "./screens/Profile";
 
 
 const Stack = createNativeStackNavigator();
@@ -121,6 +122,18 @@ const App = () => {
                 <Stack.Screen 
                     name={Constants.RouteName.ambulance}
                     component={ Ambulance }
+                    options={ {
+                        headerStyle: {
+                            backgroundColor: Constants.DEFAULT_RED,
+                        },
+                        headerTintColor: "#fff",
+                        headerTitleAlign: 'center'
+                    } }
+                />
+
+                <Stack.Screen 
+                    name={Constants.RouteName.profile}
+                    component={ Profile }
                     options={ {
                         headerStyle: {
                             backgroundColor: Constants.DEFAULT_RED,

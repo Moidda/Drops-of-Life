@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 
+import { firebase } from '@react-native-firebase/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from "./styles";
@@ -24,6 +25,7 @@ const clearAll = async () => {
     }
 };
 
+
 const getUserData = async () => {
     try {
         const name = await AsyncStorage.getItem('@name');
@@ -32,7 +34,7 @@ const getUserData = async () => {
         const locationJSON = await AsyncStorage.getItem('@location');
         const location = JSON.parse(locationJSON);
         const bloodGroup = await AsyncStorage.getItem('@bloodGroup');
-        return [name, email, contact, location, bloodGroup];
+        return [name, email, contact, location, bloodGroup];  
     } 
     catch(e) {
         console.error(e);
@@ -48,17 +50,25 @@ const HomeScreen = (props) => {
     const [ userLocation, setUserLocation ] = React.useState('');
     const [ userBloodGroup, setUserBloodGroup ] = React.useState('');
 
+
     React.useEffect(() => {
-        getUserData().then((ret) => {
-            const [name, email, contact, location, bloodGroup] = ret;
-            setUserName(name);
-            setUserContact(contact);
-            setUserLocation(location);
-            setUserBloodGroup(bloodGroup)
-            setUserEmail(email);
-            setUserEmail(ret[1]);
+        const reloadData = props.navigation.addListener('focus', () => {
+            getUserData().then((ret) => {
+                console.log("on home screen");
+                const [name, email, contact, location, bloodGroup] = ret;
+                setUserName(name);
+                setUserContact(contact);
+                setUserLocation(location);
+                setUserBloodGroup(bloodGroup)
+                setUserEmail(email);
+                setUserEmail(ret[1]);
+            });
         });
-    }, []);
+      
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+        return reloadData;
+    }, [props.navigation]);
+
     
     const logOut = () => {
         clearAll().then(() => {
@@ -84,6 +94,10 @@ const HomeScreen = (props) => {
 
     const onPressAmbulance = () => {
         props.navigation.navigate(Constants.RouteName.ambulance);
+    };
+
+    const onPressProfile = () => {
+        props.navigation.navigate(Constants.RouteName.profile);
     };
 
     return (
@@ -132,7 +146,7 @@ const HomeScreen = (props) => {
             </View>
             <View style={styles.iconContainerRow}>
                 <HomeScreenIcon
-                onPress={() => {console.warn("Long Term")}}
+                onPress={onPressProfile}
                 text="Profile"
                 iconName="user"
                 iconSize = {50}

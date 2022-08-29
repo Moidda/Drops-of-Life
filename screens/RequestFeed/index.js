@@ -109,58 +109,61 @@ const RequestFeed = (props) => {
     const [ userBloodGroup, setUserBloodGroup ] = React.useState('');
 
 
-    // this function is executed only once when the screen is loaded for the first time
+    // this function is executed everytime the screen is loaded
     React.useEffect(() => {
-        // get user data from the current session
-        getUserData((name, email, contact, location, bloodGroup) => {
-            setUserName(name);
-            setUserEmail(email);
-            setUserContact(contact);
-            setUserLocation(location);
-            setUserBloodGroup(bloodGroup);
-        });
-        // retrive all the requests from the database
-        getRequests().then(requests => {
-            setRequests(requests);
-            var tempData = [];
-            for(var reqId in requests) {
-                var req = requests[reqId];
-                if(req['state'] === Constants.RequestState.donated) 
-                    continue;
-                
-                tempData.push({
-                    key                 : reqId,
-                    bloodAmount         : req['bloodAmount'],
-                    bloodGroup          : req['bloodGroup'],
-                    date                : req['date'],
-                    hospital            : req['hospital'],
-                    location            : req['location'],
-                    name                : req['name'],
-                    note                : req['note'],
-                    requesterContact    : req['requesterContact'],
-                    requesterEmail      : req['requesterEmail'],
-                    requesterLocation   : req['requesterLocation'],
-                    state               : req['state'],
-                    urgency             : req['urgency'],
-                });
-            }
-            // sorting each of the data
-            // immediate -> stand by -> longterm
-            // each urgency should be sorted by oldest request first
-            var immediateData = [], standByData = [], longTermData = [];
-            tempData.forEach(element => {
-                if(element.urgency === Constants.urgency.immediate) immediateData.push(element);
-                if(element.urgency === Constants.urgency.standBy)   standByData.push(element);
-                if(element.urgency === Constants.urgency.longTerm)  longTermData.push(element);
+        const reloadData = props.navigation.addListener('focus', () => {
+            // get user data from the current session
+            getUserData((name, email, contact, location, bloodGroup) => {
+                setUserName(name);
+                setUserEmail(email);
+                setUserContact(contact);
+                setUserLocation(location);
+                setUserBloodGroup(bloodGroup);
             });
-            immediateData = sortByTime(immediateData);
-            standByData = sortByTime(standByData);            
-            longTermData = sortByTime(longTermData);
-            var sortedData = immediateData.concat(standByData).concat(longTermData);
-            setData(sortedData);
-            setFilterData(sortedData);
+            // retrive all the requests from the database
+            getRequests().then(requests => {
+                setRequests(requests);
+                var tempData = [];
+                for(var reqId in requests) {
+                    var req = requests[reqId];
+                    if(req['state'] === Constants.RequestState.donated) 
+                        continue;
+                    
+                    tempData.push({
+                        key                 : reqId,
+                        bloodAmount         : req['bloodAmount'],
+                        bloodGroup          : req['bloodGroup'],
+                        date                : req['date'],
+                        hospital            : req['hospital'],
+                        location            : req['location'],
+                        name                : req['name'],
+                        note                : req['note'],
+                        requesterContact    : req['requesterContact'],
+                        requesterEmail      : req['requesterEmail'],
+                        requesterLocation   : req['requesterLocation'],
+                        state               : req['state'],
+                        urgency             : req['urgency'],
+                    });
+                }
+                // sorting each of the data
+                // immediate -> stand by -> longterm
+                // each urgency should be sorted by oldest request first
+                var immediateData = [], standByData = [], longTermData = [];
+                tempData.forEach(element => {
+                    if(element.urgency === Constants.urgency.immediate) immediateData.push(element);
+                    if(element.urgency === Constants.urgency.standBy)   standByData.push(element);
+                    if(element.urgency === Constants.urgency.longTerm)  longTermData.push(element);
+                });
+                immediateData = sortByTime(immediateData);
+                standByData = sortByTime(standByData);            
+                longTermData = sortByTime(longTermData);
+                var sortedData = immediateData.concat(standByData).concat(longTermData);
+                setData(sortedData);
+                setFilterData(sortedData);
+            });
         });
-    }, []);
+        return reloadData;
+    }, [props.navigation]);
 
 
     const onFilter = (filterUrgency) => {
